@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:login="clr-namespace:AppNegocio.ViewModels.IniciarSesionVM"
+             x:Class="AppNegocio.Views.RegistrarseView"
+             Title="CrearCuenta">
+    <ContentPage.BindingContext>
+        <login:RegistrarseViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <VerticalStackLayout Margin="20">
+            <Label 
+             FontSize="Title"
+             Text="Creando nueva cuenta en AppNegocio"
+             VerticalOptions="Center" 
+             HorizontalOptions="Center" />
+            <Grid RowDefinitions="2*,2*,2*,2*,*" ColumnDefinitions="*,*">
+                <Label Grid.Row="0" Grid.Column="0" 
+                    HorizontalTextAlignment="End"
+                    VerticalTextAlignment="Center"
+                    Margin="5,10">Apellido y Nombre:</Label>
+                <Entry Grid.Row="0" Grid.Column="1" 
+                    Text="{Binding Nombre}"
+                    Margin="10,20,10,20"></Entry>
+                <Label Grid.Row="1" Grid.Column="0" 
+                    HorizontalTextAlignment="End"
+                    VerticalTextAlignment="Center"
+                    Margin="10,20">Email:</Label>
+                <Entry Grid.Row="1" Grid.Column="1" 
+                    Text="{Binding Email}"
+                    Margin="10,20,10,20"></Entry>
+
+                <Label Grid.Row="2" Grid.Column="0" 
+                    HorizontalTextAlignment="End"
+                    VerticalTextAlignment="Center"
+                    Margin="10,20">Contraseña:</Label>
+                <Entry Grid.Row="2" Grid.Column="1" 
+                    Text="{Binding Password}"
+                    Margin="10,20,100,20" IsPassword="True"></Entry>
+
+                <Label Grid.Row="3" Grid.Column="0" 
+                    HorizontalTextAlignment="End"
+                    VerticalTextAlignment="Center"
+                    Margin="10,20">Verificar Contraseña:</Label>
+                <Entry Grid.Row="3" Grid.Column="1" 
+                    Text="{Binding VerifyPassword}"
+                    Margin="10,20,100,20" IsPassword="True"></Entry>
+
+                <Button Text="Registrarse"
+                     Command="{Binding RegistrarseCommand}"
+                     Grid.Row="4" Grid.Column="0"
+                     Grid.ColumnSpan="2"
+                     Margin="100,10"
+                     ></Button>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

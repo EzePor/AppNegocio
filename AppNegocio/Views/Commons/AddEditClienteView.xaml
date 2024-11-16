@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:AppNegocio.ViewModels.Commons.ClientesViewModels"
+             x:Class="AppNegocio.Views.Commons.AddEditClienteView"
+             Title="Agregar o Editar cliente">
+
+    <ContentPage.BindingContext>
+        <viewModels:AddEditClienteViewModel />
+    </ContentPage.BindingContext>
+
+
+
+    <VerticalStackLayout Padding="20">
+        <Label 
+            Text="Agregar/Editar Cliente"
+            FontSize="Header"
+            HorizontalOptions="Center" />
+
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="Auto,*">
+            <Label Grid.Row="0" Grid.Column="0" Text="Apellido y Nombre:" />
+            <Entry Grid.Row="0" Grid.Column="1" Text="{Binding ApellidoNombre}" />
+
+            <Label Grid.Row="1" Grid.Column="0" Text="Cuit/Dni:" />
+            <Entry Grid.Row="1" Grid.Column="1" Text="{Binding CuitDni}" />
+
+            <Label Grid.Row="2" Grid.Column="0" Text="Email:" />
+            <Entry Grid.Row="2" Grid.Column="1" Text="{Binding Email}" />
+
+            <Label Grid.Row="3" Grid.Column="0" Text="Dirección:" />
+            <Entry Grid.Row="3" Grid.Column="1" Text="{Binding Direccion}" />
+
+            <Label Grid.Row="4" Grid.Column="0" Text="Teléfono:" />
+            <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Telefono}" />
+
+            <Label Grid.Row="5" Grid.Column="0" Text="Localidad:" />
+            <Entry Grid.Row="5" Grid.Column="1" Text="{Binding Localidad}" />
+
+            <Label Grid.Row="6" Grid.Column="0" Text="Código Postal:" />
+            <Entry Grid.Row="6" Grid.Column="1" Text="{Binding CodigoPostal}" />
+
+            <Label Grid.Row="7" Grid.Column="0" Text="Provincia:" />
+            <Entry Grid.Row="7" Grid.Column="1" Text="{Binding Provincia}" />
+
+            <Button Grid.Row="8" Grid.Column="0" Text="Guardar" Command="{Binding GuardarCommand}" />
+            <Button Grid.Row="8" Grid.Column="1" Text="Cancelar" Command="{Binding CancelarCommand}" />
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

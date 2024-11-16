@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="AppNegocio.NegocioShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:AppNegocio"
+    xmlns:contentviews="clr-namespace:AppNegocio.ContentViews"
+    xmlns:viewmodels="clr-namespace:AppNegocio.ViewModels.IniciarSesionVM"
+    xmlns:login="clr-namespace:AppNegocio.Views.IniciarSesion"
+    xmlns:commons="clr-namespace:AppNegocio.Views.Commons.ClientesV"
+    xmlns:common="clr-namespace:AppNegocio.Views.Commons"
+    xmlns:views="clr-namespace:AppNegocio.Views.Commons.ClientesV"
+    Shell.FlyoutBehavior="Disabled"
+    Title="AppNegocio">
+
+    <Shell.BindingContext>
+        <viewmodels:NegocioShellViewModel />
+    </Shell.BindingContext>
+
+    <Shell.FlyoutHeader>
+        <contentviews:FlyoutHeader />
+    </Shell.FlyoutHeader>
+
+    <Shell.FlyoutFooter>
+        <contentviews:FlyoutFooter />
+    </Shell.FlyoutFooter>
+
+    <FlyoutItem Route="nuestra_app" 
+        FlyoutDisplayOptions="AsMultipleItems" x:Name="FlyoutItemsPrincipal" >
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+
+        <Tab Title="Clientes"
+         Route="clientes"
+         Icon="paw.png">
+            <ShellContent
+                Title="Lista"
+                Icon="cat.png"
+                ContentTemplate="{DataTemplate commons:ClientesView}"
+                Route="ListaClientes" />
+            <ShellContent
+                Title="Agregar cliente"
+                Icon="dog.png"
+                ContentTemplate="{DataTemplate common:AddEditClienteView  }"
+                Route="AgregarEditarCliente" />
+        </Tab>
+    </FlyoutItem>
+    <MenuItem Text="Cerrar sesión"
+      Command="{Binding LogoutCommand}"
+      IconImageSource="random.png"/>
+
+    <ShellContent
+        Title="Iniciar sesión"
+        ContentTemplate="{DataTemplate login:IniciarSesionView}"
+        Route="Login" 
+        IsVisible="{Binding UserIsLogout}" />
+
+</Shell>

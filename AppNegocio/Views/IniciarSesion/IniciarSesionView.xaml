@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppNegocio.Views.IniciarSesion.IniciarSesionView"
+             xmlns:viewModels="clr-namespace:AppNegocio.ViewModels.IniciarSesionVM"
+             Title="Inicio de sesión"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.BindingContext>
+        <viewModels:IniciarSesionViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+            <Label 
+                FontSize="36"
+                Text="Inicio de sesión en Gestión de Negocio"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <Grid RowDefinitions="2*,2*,2*,*,*,*" ColumnDefinitions="*,*">
+                <Label Grid.Row="0" Grid.Column="0" 
+                       HorizontalTextAlignment="End"
+                       VerticalTextAlignment="Center"
+                       Margin="40,20">Email:</Label>
+                <Entry Grid.Row="0" Grid.Column="1" 
+                       Text="{Binding Email}"
+                       Margin="0,10,0,10"></Entry>
+
+                <Label Grid.Row="1" Grid.Column="0" 
+                       HorizontalTextAlignment="End"
+                       VerticalTextAlignment="Center"
+                       Margin="40,20">Contraseña:</Label>
+                <Entry Grid.Row="1" Grid.Column="1" 
+                       Text="{Binding Password}"
+                        IsPassword="True"
+                       Margin="0,10,0,10"></Entry>
+                <CheckBox IsChecked="{Binding RecordarContraseña}"
+                          Grid.Row="2" Grid.Column="0"
+                          HorizontalOptions="End"
+                          VerticalOptions="Center"
+                          ></CheckBox>
+                <Label Grid.Row="2" Grid.Column="1"
+                       VerticalOptions="Center"
+                       >Recordar contraseña</Label>
+
+                <Button Text="Iniciar sesión"
+                        x:Name="btnIniciarSesion"
+                        Grid.Row="3" Grid.Column="0"
+                        Command="{Binding IniciarSesionCommand}"
+                        Grid.ColumnSpan="2"
+                        Margin="0,10,0,10"
+                        ></Button>
+
+                <Button Text="Registrarse"
+                        x:Name="btnRegistrarse"
+                        Grid.Row="4" Grid.Column="0"
+                        Command="{Binding RegistrarseCommand}"
+                        Grid.ColumnSpan="2"
+                    
+                        ></Button>
+                <ImageButton 
+                             Grid.Row="5" Grid.Column="0" 
+                             Grid.ColumnSpan="2"
+                             WidthRequest="400"
+                             Margin="0,10,0,10"
+                             x:Name="btnLoginGoogle"
+                            
+                             ></ImageButton>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
