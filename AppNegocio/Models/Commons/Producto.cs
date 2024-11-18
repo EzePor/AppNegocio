@@ -11,6 +11,7 @@ namespace AppNegocio.Models.Commons
 {
     public class Producto
     {
+
         public int id { get; set; }
         [Required(ErrorMessage = "El nombre del producto debe cargarse obligatoriamente")]
         public string nombre { get; set; } = string.Empty;
@@ -32,6 +33,18 @@ namespace AppNegocio.Models.Commons
                     precio = Math.Round(parsedValue, 2);
                 }
             }
+        }
+
+
+        [Required(ErrorMessage = "El stock debe cargarse obligatoriamente")]
+
+        public int stock { get; set; }
+
+        public bool eliminado { get; set; } = false;
+
+        public override string ToString()
+        {
+            return nombre;
         }
     }
 }

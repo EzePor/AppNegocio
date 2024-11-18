@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:AppNegocio.ViewModels.Commons.ProdutosVM"  
+             x:Class="AppNegocio.Views.Commons.ProductosV.AddEditProductosView"
+             Title="Agregar o editar Producto">
+
+    <ContentPage.BindingContext>
+        <viewModels:AddEditProductoViewModel/>
+    </ContentPage.BindingContext>
+
+    <VerticalStackLayout Padding="20">
+        <Label 
+         Text="Agregar/Editar Cliente"
+         FontSize="Header"
+         HorizontalOptions="Center" />
+
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="Auto,*">
+            <Label Grid.Row="0" Grid.Column="0" Text="Nombre:" />
+            <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Nombre}" />
+
+            <Label Grid.Row="1" Grid.Column="0" Text="Rubro:" />
+            <Picker Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Rubros}" SelectedItem="{Binding Rubro}" />
+
+            <Label Grid.Row="2" Grid.Column="0" Text="Precio:" />
+            <Entry Grid.Row="2" Grid.Column="1" Text="{Binding Precio}" />
+
+            <Label Grid.Row="3" Grid.Column="0" Text="Stock:" />
+            <Entry Grid.Row="3" Grid.Column="1" Text="{Binding Stock}" />
+
+            <Button Grid.Row="4" Grid.Column="0" Text="Guardar" Command="{Binding GuardarCommand}" />
+            <Button Grid.Row="4" Grid.Column="1" Text="Cancelar" Command="{Binding CancelarCommand}" />
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

@@ -16,6 +16,7 @@ namespace AppNegocio.ViewModels.Commons.ClientesViewModels
     {
         GenericService<Cliente> clienteService = new GenericService<Cliente>();
 
+        private Cliente clienteOriginal;
         private Cliente cliente;
         public Cliente Cliente
         {
@@ -23,8 +24,23 @@ namespace AppNegocio.ViewModels.Commons.ClientesViewModels
             set
             {
                 cliente = value;
-                if (value != null)
+                if (cliente != null)
                 {
+                    // Guardamos una copia del cliente original para comparación
+                    clienteOriginal = new Cliente
+                    {
+                        id = cliente.id,
+                        apellidoNombre = cliente.apellidoNombre,
+                        cuitDni = cliente.cuitDni,
+                        direccion = cliente.direccion,
+                        telefono = cliente.telefono,
+                        email = cliente.email,
+                        Localidad = cliente.Localidad,
+                        CodigoPostal = cliente.CodigoPostal,
+                        Provincia = cliente.Provincia
+                    };
+
+                    // Cargamos las propiedades en los campos del formulario
                     ApellidoNombre = cliente.apellidoNombre;
                     CuitDni = cliente.cuitDni;
                     Direccion = cliente.direccion;
@@ -34,18 +50,6 @@ namespace AppNegocio.ViewModels.Commons.ClientesViewModels
                     CodigoPostal = cliente.CodigoPostal;
                     Provincia = cliente.Provincia;
 
-                    OnPropertyChanged();
-                }
-                else
-                {
-                    ApellidoNombre = string.Empty;
-                    CuitDni = string.Empty;
-                    Direccion = string.Empty;
-                    Telefono = string.Empty;
-                    Email = string.Empty;
-                    Localidad = string.Empty;
-                    CodigoPostal = string.Empty;
-                    Provincia = string.Empty;
                     OnPropertyChanged();
                 }
 
@@ -161,7 +165,22 @@ namespace AppNegocio.ViewModels.Commons.ClientesViewModels
 
         private bool Permitirguardar(object arg)
         {
-            return !string.IsNullOrEmpty(ApellidoNombre) && !string.IsNullOrEmpty(CuitDni) && !string.IsNullOrEmpty(Direccion) && !string.IsNullOrEmpty(Telefono) && !string.IsNullOrEmpty(Email);
+            // Verificamos si hubo algún cambio respecto al cliente original
+            if (clienteOriginal == null) return false;
+
+            return !string.IsNullOrEmpty(ApellidoNombre)
+                && !string.IsNullOrEmpty(CuitDni)
+                && !string.IsNullOrEmpty(Direccion)
+                && !string.IsNullOrEmpty(Telefono)
+                && !string.IsNullOrEmpty(Email)
+                && (ApellidoNombre != clienteOriginal.apellidoNombre
+                    || CuitDni != clienteOriginal.cuitDni
+                    || Direccion != clienteOriginal.direccion
+                    || Telefono != clienteOriginal.telefono
+                    || Email != clienteOriginal.email
+                    || Localidad != clienteOriginal.Localidad
+                    || CodigoPostal != clienteOriginal.CodigoPostal
+                    || Provincia != clienteOriginal.Provincia);
         }
 
         private async void Guardar(object obj)

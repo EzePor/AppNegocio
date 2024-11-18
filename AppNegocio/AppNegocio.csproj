@@ -111,6 +111,12 @@
 	  <MauiXaml Update="Views\Commons\ClientesV\ClientesView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Commons\ProductosV\AddEditProductosView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Commons\ProductosV\ProductosView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\IniciarSesion\IniciarSesionView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

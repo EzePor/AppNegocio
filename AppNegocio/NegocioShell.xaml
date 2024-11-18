@@ -10,6 +10,10 @@
     xmlns:commons="clr-namespace:AppNegocio.Views.Commons.ClientesV"
     xmlns:common="clr-namespace:AppNegocio.Views.Commons"
     xmlns:views="clr-namespace:AppNegocio.Views.Commons.ClientesV"
+    xmlns:product="clr-namespace:AppNegocio.Views.Commons.ProductosV"
+    xmlns:addEditproduct="clr-namespace:AppNegocio.Views.Commons.ProductosV"
+  
+    
     Shell.FlyoutBehavior="Disabled"
     Title="AppNegocio">
 
@@ -31,7 +35,8 @@
             Title="Home"
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
-
+                
+              <!--CLIENTES-->
         <Tab Title="Clientes"
          Route="clientes"
          Icon="paw.png">
@@ -46,6 +51,21 @@
                 ContentTemplate="{DataTemplate common:AddEditClienteView  }"
                 Route="AgregarEditarCliente" />
         </Tab>
+          <!-- PRODUCTOS-->
+        <Tab Title="Productos"
+         Route="productos"
+         Icon="paw.png">
+            <ShellContent
+                Title="Lista"
+                Icon="cat.png"
+                ContentTemplate="{DataTemplate product:ProductosView}"
+                Route="ListaProductos" />
+            <ShellContent
+                Title="Agregar producto"
+                Icon="dog.png"
+                ContentTemplate="{DataTemplate addEditproduct:AddEditProductosView}"
+                Route="AgregarEditarProducto" />
+            </Tab>
     </FlyoutItem>
     <MenuItem Text="Cerrar sesión"
       Command="{Binding LogoutCommand}"

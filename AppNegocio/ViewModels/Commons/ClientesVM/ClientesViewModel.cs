@@ -127,7 +127,7 @@ namespace AppNegocio.ViewModels.Commons.ClienteVM
 
         private async void Eliminar(object obj)
         {
-            bool respuesta = await Application.Current.MainPage.DisplayAlert("Eliminar una cliente", $"Está seguro que desea eliminar el cliente {clienteCurrent.apellidoNombre}", "Si", "No");
+            bool respuesta = await Application.Current.MainPage.DisplayAlert("Eliminar un cliente", $"Está seguro que desea eliminar el cliente {clienteCurrent.apellidoNombre}", "Si", "No");
             if (respuesta)
             {
                 ActivityStart = true;
@@ -149,7 +149,11 @@ namespace AppNegocio.ViewModels.Commons.ClienteVM
                 { "ClienteAEditar", clienteCurrent }
             };
             await Shell.Current.GoToAsync("//AgregarEditarCliente", navigationParameter);
-            
+
+            // Deshabilitar los botones Editar y Eliminar después de la edición
+            ClienteCurrent = null;
+            EditarCommand.ChangeCanExecute();
+            EliminarCommand.ChangeCanExecute();
         }
 
         private async void Agregar(object obj)
