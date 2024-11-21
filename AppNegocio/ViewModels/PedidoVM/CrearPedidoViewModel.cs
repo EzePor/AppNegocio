@@ -214,15 +214,18 @@ namespace AppNegocio.ViewModels.PedidoVM
                 var nuevoPedido = new Pedido
                 {
                     ClienteId = NuevoPedido.ClienteId,
-                    cliente = SelectedCliente,
+                  
                     fechaPedido = DateTime.Now,
                     estadoPedido = NuevoPedido.estadoPedido,
                     ModoPagoId = NuevoPedido.ModoPagoId,
-                    modoPago = SelectedModoPago,
+                  
                     FuePagado = NuevoPedido.FuePagado,
                     DetallesProducto = DetallesProducto.ToList(),
                     DetallesImpresion = DetallesImpresion.ToList()
                 };
+                //nulleamos impresion dentro de detallesImpresion
+                nuevoPedido.DetallesImpresion.ToList().ForEach(detalle => detalle.impresion = null);
+                nuevoPedido.DetallesProducto.ToList().ForEach(detalle => detalle.producto = null);  
 
                 await pedidoService.AddAsync(nuevoPedido);
 

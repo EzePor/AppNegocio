@@ -136,7 +136,7 @@ namespace AppNegocio.ViewModels.PedidoVM
             IsRefreshing = false;
         }
 
-        private async Task CargarResumen()
+        public async Task CargarResumen()
         {
             ActivityStart = true;
             var pedidos = await pedidoService.GetAllAsync();

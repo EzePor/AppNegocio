@@ -1,3 +1,5 @@
+using AppNegocio.ViewModels.PedidoVM;
+
 namespace AppNegocio.Views.PedidoV;
 
 public partial class ResumenPedidoView : ContentPage
@@ -6,4 +8,9 @@ public partial class ResumenPedidoView : ContentPage
 	{
 		InitializeComponent();
 	}
+    protected async override void OnAppearing()
+    {
+        var viewModel = (ResumenPedidoViewModel)BindingContext;
+        await viewModel.CargarResumen();
+    }
 }
