@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using AppNegocio.Enums;
 using AppNegocio.Models.Commons;
-using AppNegocio.Models.Details;
 
 
-namespace WebNegocio.Models.Details
+
+namespace AppNegocio.Models.Details
 {
     public class Pedido
     {

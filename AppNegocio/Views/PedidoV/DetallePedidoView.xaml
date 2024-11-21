@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:AppNegocio.ViewModels.PedidoVM"
+             x:Class="AppNegocio.Views.PedidoV.DetallePedidoView"
+             Title="DetallePedidoView">
+    <ContentPage.BindingContext>
+        <viewModels:DetallePedidoViewModel/>
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="10">
+        <Label Text="Detalles del Pedido" FontAttributes="Bold" FontSize="20" />
+        <Label Text="{Binding Pedido.cliente.apellidoNombre}" />
+        <Label Text="{Binding Pedido.fechaPedido}" />
+        <Label Text="{Binding Pedido.estadoPedido}"/>
+
+        <!--Realizar un checkBox para mostrar el pedido fuePagado-->
+        <!-- Checkbox para el campo fuePagado -->
+        <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+            <Label Text="¿Fue Pagado?" VerticalOptions="Center"/>
+            <CheckBox IsChecked="{Binding Pedido.FuePagado}" VerticalOptions="Center"/>
+        </StackLayout>
+
+
+
+        <Label Text="Productos:" FontAttributes="Bold" Margin="0,10,0,0" />
+        <CollectionView ItemsSource="{Binding DetalleProductos}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Label Text="{Binding producto.nombre}" />
+                        <Label Text="{Binding cantidad}" />
+                        <Label Text="{Binding TotalF}" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label Text="Impresiones:" FontAttributes="Bold" Margin="10,20,0,0" />
+        <CollectionView ItemsSource="{Binding DetalleImpresiones}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Label Text="{Binding impresion.tamanio}" />
+                        <Label Text="{Binding cantidad}" />
+                        <Label Text="{Binding TotalF}" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Label Text="{Binding Pedido.TotalPedidoF, StringFormat='Total Pedido: {0:C}'}" FontSize="Medium" />
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:AppNegocio.ViewModels.PedidoVM"
+             x:Class="AppNegocio.Views.PedidoV.ResumenPedidoView"
+             Title="ResumenPedidoView">
+
+    <ContentPage.BindingContext>
+        <viewModels:ResumenPedidoViewModel />
+    </ContentPage.BindingContext>
+
+    <!-- Usamos un Grid para dividir la vista -->
+    <Grid RowDefinitions="Auto, *, Auto" Padding="10">
+
+        <!-- Título y ActivityIndicator -->
+        <VerticalStackLayout Grid.Row="0" Spacing="10">
+            <Label 
+             Text="Pedidos"
+             FontSize="Header"
+             HorizontalOptions="Center" 
+             VerticalOptions="Start" />
+
+            <ActivityIndicator 
+             IsRunning="{Binding ActivityStart}" 
+             IsVisible="{Binding ActivityStart}" />
+        </VerticalStackLayout>
+
+        <!-- Lista de clientes dentro de un ScrollView para evitar overflow -->
+        <ScrollView Grid.Row="1">
+            <CollectionView
+             ItemsSource="{Binding Pedidos}"
+             SelectedItem="{Binding PedidoCurrent}"
+             SelectionMode="Single"
+             HeightRequest="500">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*,*,*,*" Padding="5">
+                            <Label Text="{Binding fechaPedido}" Grid.Column="0" />
+                            <Label Text="{Binding cliente}" Grid.Column="1" />
+                            <!--<Label Text="{Binding DetallesProducto}" Grid.Column="2"/>
+                            <Label Text="{Binding DetallesImpresion}" Grid.Column="3"/>-->
+                            <Label Text="{Binding TotalPedidoF}" Grid.Column="2"/>
+                            <Label Text="{Binding estadoPedido}" Grid.Column="3"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+        <!-- Botones en la parte inferior, siempre visibles -->
+        <HorizontalStackLayout Grid.Row="2" Spacing="10" HorizontalOptions="Center" Margin="0,10,0,0">
+            <Button 
+            Text="Detalle"
+            Command="{Binding DetalleCommand}" 
+            WidthRequest="100"
+            HeightRequest="40"/>
+        </HorizontalStackLayout>
+    </Grid>
+
+
+</ContentPage>

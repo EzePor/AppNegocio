@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebNegocio.Models.Details;
+using AppNegocio.Models.Details;
 
 namespace AppNegocio.Models.Commons
 {
