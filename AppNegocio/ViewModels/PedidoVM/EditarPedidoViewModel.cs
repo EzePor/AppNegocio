@@ -1,4 +1,5 @@
-﻿using AppNegocio.Enums;
+﻿using AppNegocio.Class;
+using AppNegocio.Enums;
 using AppNegocio.Models.Commons;
 using AppNegocio.Models.Details;
 using AppNegocio.Services;
@@ -7,11 +8,54 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-
 namespace AppNegocio.ViewModels.PedidoVM
 {
-    public class CrearPedidoViewModel : INotifyPropertyChanged
+
+    public class EditarPedidoViewModel : INotifyPropertyChanged 
     {
+    
+        //public void ApplyQueryAttributes(IDictionary<string, object> query)
+        //{
+        //    if (query.ContainsKey("PedidoAEditar"))
+        //    {
+        //        PedidoAEditar = query["PedidoAEditar"] as Pedido;
+        //        Debug.WriteLine($"[EditarPedidoViewModel] PedidoAEditar recibido: {PedidoAEditar?.id}");
+        //    }
+        //}
+
+        //private Pedido pedidoAEditar;
+        //public Pedido PedidoAEditar
+        //{
+        //    get => pedidoAEditar;
+        //    set
+        //    {
+        //        pedidoAEditar = value;
+        //        OnPropertyChanged();
+        //        Debug.WriteLine($"[EditarPedidoViewModel] PedidoAEditar recibido: {pedidoAEditar?.id}");
+        //        CargarPedido(pedidoAEditar);
+
+        //        // quiero ver en consola lo que contiene PedidoAEditar
+        //        Debug.WriteLine($"[EditarPedidoViewModel] PedidoAEditar recibido: {pedidoAEditar}");
+
+
+
+        //    }
+        //}
+         
+
+
+        private Pedido pedido;
+        public Pedido Pedido
+        {
+            get => pedido;
+            set
+            {
+                //SetProperty(ref pedido, value);
+                pedido = value;
+                OnPropertyChanged();
+            }
+        }
+
         private Cliente selectedCliente;
         public Cliente SelectedCliente
         {
@@ -19,7 +63,11 @@ namespace AppNegocio.ViewModels.PedidoVM
             set
             {
                 selectedCliente = value;
-                NuevoPedido.ClienteId = selectedCliente?.id ?? 0; // Asignar el ID del cliente seleccionado
+                if (NuevoPedido != null)
+                {
+                    NuevoPedido.ClienteId = selectedCliente?.id ?? 0;
+                    NuevoPedido.cliente = selectedCliente; // Asignar cliente completo
+                }
                 OnPropertyChanged();
             }
         }
@@ -31,7 +79,11 @@ namespace AppNegocio.ViewModels.PedidoVM
             set
             {
                 selectedModoPago = value;
-                NuevoPedido.ModoPagoId = selectedModoPago?.id ?? 0; // Asignar el ID del modo de pago seleccionado
+                if (NuevoPedido != null)
+                {
+                    NuevoPedido.ModoPagoId = selectedModoPago?.id ?? 0;
+                    NuevoPedido.modoPago = selectedModoPago; // Asignar modo de pago completo
+                }
                 OnPropertyChanged();
             }
         }
@@ -95,6 +147,17 @@ namespace AppNegocio.ViewModels.PedidoVM
             }
         }
 
+        private bool esEdicion;
+        public bool EsEdicion
+        {
+            get => esEdicion;
+            set
+            {
+                esEdicion = value;
+                OnPropertyChanged();
+            }
+        }
+
         // Propiedad para almacenar los detalles del pedido
         private ObservableCollection<object> detalles;
         public ObservableCollection<object> Detalles
@@ -140,6 +203,10 @@ namespace AppNegocio.ViewModels.PedidoVM
             ActivityMessage = string.Empty;
             IsBusy = false;
         }
+
+
+
+
         public ObservableCollection<DetalleProducto> DetallesProducto { get; set; }
         public ObservableCollection<DetalleImpresion> DetallesImpresion { get; set; }
 
@@ -147,9 +214,9 @@ namespace AppNegocio.ViewModels.PedidoVM
         public ICommand AgregarCommand { get; }
         public ICommand AgregarProductoCommand { get; }
         public ICommand AgregarImpresionCommand { get; }
-        public ICommand CrearPedidoCommand { get; }
+        public ICommand GuardarPedidoCommand { get; }
 
-        public CrearPedidoViewModel()
+        public EditarPedidoViewModel()
         {
             clienteService = new GenericService<Cliente>();
             modoPagoService = new GenericService<ModoPago>();
@@ -170,30 +237,106 @@ namespace AppNegocio.ViewModels.PedidoVM
             //AgregarCommand = new Command(Agregar);
             AgregarProductoCommand = new Command(AgregarProducto);
             AgregarImpresionCommand = new Command(AgregarImpresion);
-            CrearPedidoCommand = new Command(CrearPedido);
+            GuardarPedidoCommand = new Command(GuardarPedido);
             CargarDatos();
+            
         }
 
        
 
-        private async void CrearPedido(object obj)
-        {
-            // necesito crear la lógica para guardar un pedido completo según el modelo de pedido 
+        //public EditarPedidoViewModel(Pedido pedido) : this()
+        //{
 
+        //    if (pedido != null)
+        //    {
+        //        CargarPedido(pedido);
+        //    }
+        //}
+        //public  void CargarPedido()
+        //{
+        //    // No hacer nada o inicializar valores predeterminados
+        //}
+
+        public async void CargarPedido()
+        {
+            try
+            {
+                ShowActivityIndicator("Cargando pedido...");
+
+                // Obtener el pedido existente por ID
+                Pedido pedidoExistente = await pedidoService.GetByIdAsync(pedido.id);
+                if (pedidoExistente != null)
+                {
+                    // Asignar los datos del pedido existente a NuevoPedido
+                    NuevoPedido = pedidoExistente;
+
+                    // Asignar otros datos necesarios
+                    SelectedCliente = pedidoExistente.cliente;
+                    SelectedModoPago = pedidoExistente.modoPago;
+                    DetallesProducto = new ObservableCollection<DetalleProducto>(pedidoExistente.DetallesProducto);
+                    DetallesImpresion = new ObservableCollection<DetalleImpresion>(pedidoExistente.DetallesImpresion);
+                }
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("Error", "No se encontró el pedido.", "OK");
+                }
+
+                HideActivityIndicator();
+            }
+            catch (Exception ex)
+            {
+                HideActivityIndicator();
+                var errorDetails = $"Mensaje: {ex.Message}\nStackTrace: {ex.StackTrace}";
+                Console.WriteLine(errorDetails);
+                await App.Current.MainPage.DisplayAlert("Error", $"Ocurrió un error al cargar el pedido: {ex.Message}", "OK");
+            }
+
+            CalcularTotales();
+        }
+
+        private bool ValidarPedido(Pedido pedido)
+        {
+            if (pedido.ClienteId == 0)
+            {
+                Console.WriteLine("Error: Cliente no asignado.");
+                return false;
+            }
+
+            if (pedido.ModoPagoId == 0)
+            {
+                Console.WriteLine("Error: Modo de pago no asignado.");
+                return false;
+            }
+
+            if (!pedido.DetallesProducto.Any() && !pedido.DetallesImpresion.Any())
+            {
+                Console.WriteLine("Error: No se han agregado productos o impresiones.");
+                return false;
+            }
+
+            return true;
+        }
+
+
+        private async void GuardarPedido(object obj)
+        {
             try
             {
                 // Validar datos requeridos
-                if (NuevoPedido.ClienteId <= 0  || SelectedCliente == null)
+                if (NuevoPedido.ClienteId <= 0 || SelectedCliente == null)
                 {
                     await App.Current.MainPage.DisplayAlert("Error", "Debe seleccionar un cliente.", "OK");
                     return;
                 }
 
-                if (NuevoPedido.ModoPagoId <= 0)
+                if (NuevoPedido.ModoPagoId <= 0 || SelectedModoPago == null)
                 {
                     await App.Current.MainPage.DisplayAlert("Error", "Debe seleccionar un modo de pago.", "OK");
                     return;
                 }
+
+                NuevoPedido.ModoPagoId = SelectedModoPago.id;
+                NuevoPedido.modoPago = SelectedModoPago;
 
                 if (!DetallesProducto.Any() && !DetallesImpresion.Any())
                 {
@@ -201,35 +344,36 @@ namespace AppNegocio.ViewModels.PedidoVM
                     return;
                 }
 
-                ShowActivityIndicator("Guardando pedido...");
+                ShowActivityIndicator("Actualizando pedido...");
 
-                // Crear un nuevo pedido basado en los datos actuales
-                var nuevoPedido = new Pedido
+                // Actualizar pedido existente
+                NuevoPedido.DetallesProducto = DetallesProducto.ToList();
+                NuevoPedido.DetallesImpresion = DetallesImpresion.ToList();
+
+                // Limpiar referencias circulares en las colecciones
+                NuevoPedido.DetallesImpresion?.ToList().ForEach(detalle => detalle.impresion = null);
+                NuevoPedido.DetallesProducto?.ToList().ForEach(detalle => detalle.producto = null);
+
+                if (!ValidarPedido(NuevoPedido))
                 {
-                    ClienteId = NuevoPedido.ClienteId,
-                  
-                    fechaPedido =DateTime.Now,
-                    estadoPedido = NuevoPedido.estadoPedido,
-                    ModoPagoId = NuevoPedido.ModoPagoId,
-                  
-                    FuePagado = NuevoPedido.FuePagado,
-                    DetallesProducto = DetallesProducto.ToList(),
-                    DetallesImpresion = DetallesImpresion.ToList()
-                };
-                //nulleamos impresion dentro de detallesImpresion
-                nuevoPedido.DetallesImpresion.ToList().ForEach(detalle => detalle.impresion = null);
-                nuevoPedido.DetallesProducto.ToList().ForEach(detalle => detalle.producto = null);  
+                    await App.Current.MainPage.DisplayAlert("Error", "Hay errores en los datos del pedido. Por favor, revise los campos obligatorios.", "OK");
+                    return;
+                }
 
-                await pedidoService.AddAsync(nuevoPedido);
+                // Realizar la actualización
+                await pedidoService.UpdateAsync(NuevoPedido);
 
                 HideActivityIndicator();
-                await App.Current.MainPage.DisplayAlert("Éxito", "Pedido guardado correctamente.", "OK");
+                await App.Current.MainPage.DisplayAlert("Éxito", "Pedido actualizado correctamente.", "OK");
+
                 LimpiarFormulario();
             }
             catch (Exception ex)
             {
                 HideActivityIndicator();
-                await App.Current.MainPage.DisplayAlert("Error", $"Ocurrió un error al guardar el pedido: {ex.Message}", "OK");
+                var errorDetails = $"Mensaje: {ex.Message}\nStackTrace: {ex.StackTrace}";
+                Console.WriteLine(errorDetails);
+                await App.Current.MainPage.DisplayAlert("Error", $"Ocurrió un error al actualizar el pedido: {ex.Message}", "OK");
             }
         }
 
@@ -250,7 +394,7 @@ namespace AppNegocio.ViewModels.PedidoVM
             SelectedCliente = null;
             SelectedModoPago = null;
             estadosPedido = null;
-            
+
         }
 
         private decimal precioAcumulado;
@@ -288,6 +432,13 @@ namespace AppNegocio.ViewModels.PedidoVM
                 if (CantidadProducto > SelectedProducto.stock)
                 {
                     App.Current.MainPage.DisplayAlert("Error", "No hay suficiente stock disponible.", "OK");
+                    return;
+                }
+
+                // Verificar duplicados
+                if (DetallesProducto.Any(d => d.ProductoId == SelectedProducto.id))
+                {
+                    App.Current.MainPage.DisplayAlert("Error", "Este producto ya está agregado.", "OK");
                     return;
                 }
 
@@ -358,9 +509,9 @@ namespace AppNegocio.ViewModels.PedidoVM
 
         private void CalcularTotales()
         {
-           TotalProductos = DetallesProducto.Sum(dp => dp.cantidad * dp.precioUnitario);
-           TotalImpresiones = DetallesImpresion.Sum(di => di.cantidad * di.precioUnitario);
-           OnPropertyChanged(nameof(TotalGeneral)); // Notifica el total general
+            TotalProductos = DetallesProducto.Sum(dp => dp.cantidad * dp.precioUnitario);
+            TotalImpresiones = DetallesImpresion.Sum(di => di.cantidad * di.precioUnitario);
+            OnPropertyChanged(nameof(TotalGeneral)); // Notifica el total general
 
         }
 
@@ -456,15 +607,24 @@ namespace AppNegocio.ViewModels.PedidoVM
             }
         }
 
-       
 
         private async Task CargarDatos()
         {
-            Clientes = new ObservableCollection<Cliente>(await clienteService.GetAllAsync());
-            ModosPago = new ObservableCollection<ModoPago>(await modoPagoService.GetAllAsync());
-            Productos = new ObservableCollection<Producto>(await productoService.GetAllAsync());
-            Impresiones = new ObservableCollection<Impresion>(await impresionService.GetAllAsync());
-            EstadosPedido = new ObservableCollection<EstadoPedidoEnum>(Enum.GetValues(typeof(EstadoPedidoEnum)).Cast<EstadoPedidoEnum>());
+        
+             Clientes = new ObservableCollection<Cliente>(await clienteService.GetAllAsync());
+             ModosPago = new ObservableCollection<ModoPago>(await modoPagoService.GetAllAsync());
+             Productos = new ObservableCollection<Producto>(await productoService.GetAllAsync());
+             Impresiones = new ObservableCollection<Impresion>(await impresionService.GetAllAsync());
+             EstadosPedido = new ObservableCollection<EstadoPedidoEnum>(Enum.GetValues(typeof(EstadoPedidoEnum)).Cast<EstadoPedidoEnum>());
+
+               // Inicializar las propiedades seleccionadas
+             SelectedCliente = Clientes.FirstOrDefault(c => c.id == Pedido.ClienteId);
+             SelectedModoPago = ModosPago.FirstOrDefault(m => m.id == Pedido.ModoPagoId);
+            Pedido.estadoPedido = EstadosPedido.FirstOrDefault(e => e == Pedido.estadoPedido);
+            // Notificar cambios
+            OnPropertyChanged(nameof(SelectedCliente));
+            OnPropertyChanged(nameof(SelectedModoPago));
+            OnPropertyChanged(nameof(Pedido));
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -481,5 +641,8 @@ namespace AppNegocio.ViewModels.PedidoVM
             OnPropertyChanged(propertyName);
             return true;
         }
+
+       
     }
+
 }

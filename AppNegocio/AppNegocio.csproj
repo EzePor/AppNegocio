@@ -132,6 +132,9 @@
 	  <MauiXaml Update="Views\PedidoV\DetallePedidoView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\PedidoV\EditarPedidoView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\PedidoV\ResumenPedidoView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

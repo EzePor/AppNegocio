@@ -1,4 +1,5 @@
 ﻿using AppNegocio.Class;
+using AppNegocio.Models.Commons;
 using AppNegocio.Models.Details;
 using AppNegocio.Services;
 using AppNegocio.Views.PedidoV;
@@ -21,6 +22,7 @@ namespace AppNegocio.ViewModels.PedidoVM
        GenericService<DetalleProducto> detalleProductoService = new GenericService<DetalleProducto>();
         GenericService<DetalleImpresion> detalleImpresionService = new GenericService<DetalleImpresion>();
         GenericService<Pedido> pedidoService = new GenericService<Pedido>();
+        GenericService<ModoPago> modoPagoService = new GenericService<ModoPago>();
 
         private bool activityStart;
         public bool ActivityStart
@@ -77,12 +79,29 @@ namespace AppNegocio.ViewModels.PedidoVM
         }
 
         private Pedido pedidoSeleccionado;
+
         public Pedido PedidoSeleccionado
         {
-            get { return pedidoSeleccionado; }
+            get => pedidoSeleccionado;
             set
             {
-                pedidoSeleccionado = value;
+                if (pedidoSeleccionado != value)
+                {
+                    pedidoSeleccionado = value;
+                    OnPropertyChanged();
+                    Debug.WriteLine($"[PedidoSeleccionado] Cambiado: {pedidoSeleccionado?.id}");
+                }
+            }
+        }
+
+        private ModoPago modoPago;
+        public ModoPago ModoPago
+        {
+            get
+            {
+                return modoPago;
+            }
+            set { modoPago = value;
                 OnPropertyChanged();
             }
         }
@@ -95,6 +114,7 @@ namespace AppNegocio.ViewModels.PedidoVM
             {
                 pedidoCurrent = value;
                 OnPropertyChanged();
+                Debug.WriteLine($"[PedidoCurrent] Cambiado: {pedidoCurrent?.id}");
             }
         }
 
@@ -109,13 +129,17 @@ namespace AppNegocio.ViewModels.PedidoVM
             }
         }
 
-        public Command DetalleCommand { get; }
+        public Command DetalleCommand { get; } 
+       public Command EditarCommand { get; }
+
+       
 
         public ResumenPedidoViewModel()
         {
             DetalleProductos = new ObservableCollection<DetalleProducto>();
             DetalleImpresiones = new ObservableCollection<DetalleImpresion>();
             DetalleCommand = new Command(Detalle);
+            EditarCommand = new Command(Editar, PermitirEditarPedido);
 
             Task.Run(async () => await CargarResumen());
 
@@ -129,6 +153,37 @@ namespace AppNegocio.ViewModels.PedidoVM
             });
         }
 
+        private bool PermitirEditarPedido(object arg)
+        {
+            Debug.WriteLine($"PermitirEditarPedido: PedidoSeleccionado = {PedidoSeleccionado}");
+            return PedidoSeleccionado != null;
+        }
+
+        private async void Editar(object obj)
+        {
+            if (PedidoSeleccionado != null)
+            {
+                Debug.WriteLine($"[ResumenPedidoViewModel] Navegando a EditarPedidoView con PedidoSeleccionado: {PedidoSeleccionado?.id}");
+                var navigationParameter = new Dictionary<string, object>
+        {
+            { "PedidoAEditar", PedidoSeleccionado }
+        };
+
+                // Imprimir los parámetros que se están enviando
+                foreach (var param in navigationParameter)
+                {
+                    Debug.WriteLine($"Enviando parámetro: {param.Key} = {param.Value}");
+                }
+
+                await Shell.Current.GoToAsync("//EditarPedidoView", navigationParameter);
+            }
+            else
+            {
+                Debug.WriteLine("[ResumenPedidoViewModel] PedidoSeleccionado es nulo.");
+            }
+
+        }
+
         private async Task RefreshResumenes()
         {
             IsRefreshing = true;
@@ -140,17 +195,40 @@ namespace AppNegocio.ViewModels.PedidoVM
         {
             ActivityStart = true;
             var pedidos = await pedidoService.GetAllAsync();
-            Pedidos = new ObservableCollection<Pedido>(pedidos); 
+            Pedidos = new ObservableCollection<Pedido>(pedidos);
+
+            foreach (var pedido in pedidos)
+            {
+                if (pedido.ModoPagoId > 0)
+                {
+                    pedido.modoPago = await modoPagoService.GetByIdAsync(pedido.ModoPagoId);
+                }
+            }
+
+            // Verificar que ModoPago se asigna correctamente
+            foreach (var pedido in Pedidos)
+            {
+                Debug.WriteLine($"Pedido ID: {pedido.id}, ModoPago: {pedido.modoPago?.nombre}");
+            }
+
+
             ActivityStart = false;
         }
 
         private async void Detalle(object obj)
         {
-            var navigationParameter = new ShellNavigationQueryParameters
+            if (PedidoSeleccionado != null)
             {
-                { "PedidoAMostrar", pedidoCurrent }
-            };
-            await Shell.Current.GoToAsync("//DetallePedido", navigationParameter);
+                var navigationParameter = new ShellNavigationQueryParameters
+        {
+            { "PedidoAMostrar", PedidoSeleccionado }
+        };
+                await Shell.Current.GoToAsync("//DetallePedido", navigationParameter);
+            }
+            else
+            {
+                Debug.WriteLine("[ResumenPedidoViewModel] PedidoSeleccionado es nulo.");
+            }
         }
     }
 }

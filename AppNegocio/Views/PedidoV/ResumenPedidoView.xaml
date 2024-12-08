@@ -29,18 +29,19 @@
         <ScrollView Grid.Row="1">
             <CollectionView
              ItemsSource="{Binding Pedidos}"
-             SelectedItem="{Binding PedidoCurrent}"
+             SelectedItem="{Binding PedidoSeleccionado}"
              SelectionMode="Single"
              HeightRequest="500">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid ColumnDefinitions="*,*,*,*" Padding="5">
+                        <Grid ColumnDefinitions="*,*,*,*,*" Padding="5">
                             <Label Text="{Binding fechaPedido}" Grid.Column="0" />
                             <Label Text="{Binding cliente}" Grid.Column="1" />
+                            <Label Text="{Binding modoPago}" Grid.Column="2"/>
                             <!--<Label Text="{Binding DetallesProducto}" Grid.Column="2"/>
                             <Label Text="{Binding DetallesImpresion}" Grid.Column="3"/>-->
-                            <Label Text="{Binding TotalPedidoF}" Grid.Column="2"/>
-                            <Label Text="{Binding estadoPedido}" Grid.Column="3"/>
+                            <Label Text="{Binding TotalPedidoF}" Grid.Column="3"/>
+                            <Label Text="{Binding estadoPedido}" Grid.Column="4"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -53,6 +54,12 @@
             Command="{Binding DetalleCommand}" 
             WidthRequest="100"
             HeightRequest="40"/>
+            <Button 
+ Text="Editar"
+ Command="{Binding EditarCommand}" 
+IsEnabled="{Binding PedidoSeleccionado, Converter={StaticResource NullToBoolConverter}}" 
+ WidthRequest="100"
+ HeightRequest="40"/>
         </HorizontalStackLayout>
     </Grid>
 

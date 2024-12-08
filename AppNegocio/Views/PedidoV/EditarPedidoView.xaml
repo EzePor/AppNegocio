@@ -2,50 +2,53 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:AppNegocio.ViewModels.PedidoVM"
-             x:Class="AppNegocio.Views.PedidoV.CrearPedidoView"
-             
-             Title="Crear Pedido">
+             x:Class="AppNegocio.Views.PedidoV.EditarPedidoView"
+             xmlns:converters="clr-namespace:AppNegocio.Converters"
+             Title="Editar Pedido">
+
+    <!--<ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>-->
+
 
     <ContentPage.BindingContext>
-        <viewmodels:CrearPedidoViewModel/>
+        <viewmodels:EditarPedidoViewModel/>
     </ContentPage.BindingContext>
 
     <ScrollView>
         <VerticalStackLayout Spacing="20" Padding="20">
-
             <!-- Fecha del Pedido -->
             <Label Text="Fecha del Pedido:" />
-            <DatePicker Date="{Binding NuevoPedido.fechaPedido}" />
+            <DatePicker Date="{Binding Pedido.fechaPedido}" />
 
             <!-- Seleccionar Cliente -->
             <Label Text="Cliente:" />
-            <Picker Title="Seleccione un cliente"
-                 ItemsSource="{Binding Clientes}"
-                 ItemDisplayBinding="{Binding apellidoNombre}"
-                 SelectedItem="{Binding SelectedCliente}" />
+            <!--<Picker ItemsSource="{Binding Clientes}" SelectedItem="{Binding SelectedCliente.apellidoNombre}"  IsEnabled="False" />-->
+            <Picker ItemsSource="{Binding Clientes}" SelectedItem="{Binding SelectedCliente}" ItemDisplayBinding="{Binding apellidoNombre}" IsEnabled="False" />
+
 
             <!-- Seleccionar Modo de Pago -->
             <Label Text="Modo de Pago:" />
-            <Picker Title="Seleccione un modo de pago"
-                 ItemsSource="{Binding ModosPago}"
-                 ItemDisplayBinding="{Binding nombre}"
-                 SelectedItem="{Binding SelectedModoPago}" />
+            <!--<Picker ItemsSource="{Binding ModosPago}" SelectedItem="{Binding SelectedModoPago.nombre}" />-->
+            <Picker ItemsSource="{Binding ModosPago}" SelectedItem="{Binding SelectedModoPago}" ItemDisplayBinding="{Binding nombre}" />
+
 
             <!-- Estado del Pedido -->
             <Label Text="Estado del Pedido:" />
-            <Picker Title="Seleccione un estado"
-                 ItemsSource="{Binding EstadosPedido}"
-                 SelectedItem="{Binding NuevoPedido.estadoPedido}" />
+            <!--<Picker ItemsSource="{Binding EstadosPedido}" SelectedItem="{Binding Pedido.estadoPedido}" />-->
+            
+            <Picker ItemsSource="{Binding EstadosPedido}" SelectedItem="{Binding Pedido.estadoPedido}" />
 
             <!-- Fue Pagado -->
-            <CheckBox IsChecked="{Binding NuevoPedido.FuePagado}" />
+            <CheckBox IsChecked="{Binding Pedido.FuePagado}" />
             <Label Text="¿Fue pagado?" />
 
             <!-- Gestión de productos -->
             <Label Text="Productos:" FontAttributes="Bold" />
             <Picker ItemsSource="{Binding Productos}" 
-        ItemDisplayBinding="{Binding nombre}" 
-        SelectedItem="{Binding SelectedProducto}" />
+   SelectedItem="{Binding SelectedProducto}" />
             <Label Text="Cantidad:" />
             <Entry Text="{Binding CantidadProducto}" Keyboard="Numeric" />
             <Button Text="Agregar Producto" Command="{Binding AgregarProductoCommand}" />
@@ -62,13 +65,12 @@
                 </ListView.ItemTemplate>
             </ListView>
             <Label Text="{Binding TotalProductos, StringFormat='Total productos: {0:C}'}" 
-       FontAttributes="Bold" TextColor="Green" />
+  FontAttributes="Bold" TextColor="Green" />
 
             <!-- Gestión de impresiones -->
             <Label Text="Impresiones:" FontAttributes="Bold" />
             <Picker ItemsSource="{Binding Impresiones}" 
-        ItemDisplayBinding="{Binding tamanio}" 
-        SelectedItem="{Binding SelectedImpresion}" />
+               SelectedItem="{Binding SelectedImpresion}" />
             <Label Text="Cantidad:" />
             <Entry Text="{Binding CantidadImpresion}" Keyboard="Numeric" />
             <Button Text="Agregar Impresión" Command="{Binding AgregarImpresionCommand}" />
@@ -85,16 +87,18 @@
                 </ListView.ItemTemplate>
             </ListView>
             <Label Text="{Binding TotalImpresiones, StringFormat='Total impresiones: {0:C}'}" 
-       FontAttributes="Bold" TextColor="Blue" />
+  FontAttributes="Bold" TextColor="Blue" />
 
             <!-- Total general -->
             <Label Text="{Binding TotalGeneral, StringFormat='Total general: {0:C}'}" 
-       FontAttributes="Bold" TextColor="Red" HorizontalOptions="Center" />
+  FontAttributes="Bold" TextColor="Red" HorizontalOptions="Center" />
 
             <!-- Botón para crear pedido -->
             <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" />
             <Label Text="{Binding ActivityMessage}" IsVisible="{Binding IsBusy}" />
-            <Button Text="Crear Pedido" Command="{Binding CrearPedidoCommand}" />
+            <Button Text="Guardar Pedido"
+        Command="{Binding GuardarPedidoCommand}" />
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

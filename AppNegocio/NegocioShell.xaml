@@ -15,6 +15,7 @@
     xmlns:pedido="clr-namespace:AppNegocio.Views.PedidoV"
     xmlns:resumen="clr-namespace:AppNegocio.Views.PedidoV"
     xmlns:detalleResumen="clr-namespace:AppNegocio.Views.PedidoV"
+    xmlns:editarpedido="clr-namespace:AppNegocio.Views.PedidoV"
   
     
     Shell.FlyoutBehavior="Disabled"
@@ -78,6 +79,11 @@
          Icon="cat.png"
          ContentTemplate="{DataTemplate pedido:CrearPedidoView }"
          Route="CrearPedido" />
+            <ShellContent
+         Title="Editar Pedido"
+         Icon="dog.png"
+         ContentTemplate="{DataTemplate editarpedido:EditarPedidoView}"
+         Route="EditarPedidoView" />
         </Tab>
         
         <!--RESUMENPEDIDO-->

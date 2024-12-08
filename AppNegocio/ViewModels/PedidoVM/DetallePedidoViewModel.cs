@@ -1,5 +1,7 @@
 ﻿using AppNegocio.Class;
+using AppNegocio.Models.Commons;
 using AppNegocio.Models.Details;
+using AppNegocio.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ namespace AppNegocio.ViewModels.PedidoVM
     [QueryProperty(nameof(Pedido), "PedidoAMostrar")]
     public class DetallePedidoViewModel : ObservableObject 
     {
+        GenericService<Pedido> pedidoservice = new GenericService<Pedido>();
 
         private Pedido pedido;
         public Pedido Pedido
@@ -26,6 +29,13 @@ namespace AppNegocio.ViewModels.PedidoVM
                     CargarDetalles();
                 }
             }
+        }
+
+        private ModoPago modoPago;
+        public ModoPago ModoPago
+        {
+            get => modoPago;
+            set => SetProperty(ref modoPago, value);
         }
 
         public ObservableCollection<DetalleProducto> DetalleProductos { get; set; } = new ObservableCollection<DetalleProducto>();
@@ -52,9 +62,13 @@ namespace AppNegocio.ViewModels.PedidoVM
                     foreach (var impresion in Pedido.DetallesImpresion)
                         DetalleImpresiones.Add(impresion);
 
+                // Asigna el modo de pago del pedido
+                ModoPago = Pedido.modoPago;
+
                 // Notifica los cambios para que la vista se actualice
                 OnPropertyChanged(nameof(DetalleProductos));
                 OnPropertyChanged(nameof(DetalleImpresiones));
+                OnPropertyChanged(nameof(ModoPago));
             }
         }
     }
