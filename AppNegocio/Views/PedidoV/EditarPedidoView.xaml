@@ -4,7 +4,9 @@
              xmlns:viewmodels="clr-namespace:AppNegocio.ViewModels.PedidoVM"
              x:Class="AppNegocio.Views.PedidoV.EditarPedidoView"
              xmlns:converters="clr-namespace:AppNegocio.Converters"
-             Title="Editar Pedido">
+             Title="Editar Pedido"
+             BackgroundColor="#121212"
+NavigationPage.HasNavigationBar="False">
 
     <!--<ContentPage.Resources>
         <ResourceDictionary>
@@ -20,85 +22,97 @@
     <ScrollView>
         <VerticalStackLayout Spacing="20" Padding="20">
             <!-- Fecha del Pedido -->
-            <Label Text="Fecha del Pedido:" />
-            <DatePicker Date="{Binding Pedido.fechaPedido}" />
+            <Label Text="Fecha del Pedido:" TextColor="White" />
+            <DatePicker Date="{Binding Pedido.fechaPedido}" BackgroundColor="#1E1E1E" TextColor="White" />
 
             <!-- Seleccionar Cliente -->
-            <Label Text="Cliente:" />
-            <!--<Picker ItemsSource="{Binding Clientes}" SelectedItem="{Binding SelectedCliente.apellidoNombre}"  IsEnabled="False" />-->
-            <Picker ItemsSource="{Binding Clientes}" SelectedItem="{Binding SelectedCliente}" ItemDisplayBinding="{Binding apellidoNombre}" IsEnabled="False" />
-
+            <Label Text="Cliente:" TextColor="White" />
+            <Picker ItemsSource="{Binding Clientes}" 
+            SelectedItem="{Binding SelectedCliente,Mode=TwoWay}" 
+            ItemDisplayBinding="{Binding apellidoNombre}" 
+            IsEnabled="False" 
+            BackgroundColor="#1E1E1E" 
+            TextColor="White" 
+            TitleColor="Gray" />
 
             <!-- Seleccionar Modo de Pago -->
-            <Label Text="Modo de Pago:" />
-            <!--<Picker ItemsSource="{Binding ModosPago}" SelectedItem="{Binding SelectedModoPago.nombre}" />-->
-            <Picker ItemsSource="{Binding ModosPago}" SelectedItem="{Binding SelectedModoPago}" ItemDisplayBinding="{Binding nombre}" />
-
+            <Label Text="Modo de Pago:" TextColor="White" />
+            <Picker ItemsSource="{Binding ModosPago}" 
+            SelectedItem="{Binding SelectedModoPago, Mode=TwoWay}" 
+            ItemDisplayBinding="{Binding nombre}" 
+            BackgroundColor="#1E1E1E" 
+            TextColor="White" 
+            TitleColor="Gray" />
 
             <!-- Estado del Pedido -->
-            <Label Text="Estado del Pedido:" />
-            <!--<Picker ItemsSource="{Binding EstadosPedido}" SelectedItem="{Binding Pedido.estadoPedido}" />-->
-            
-            <Picker ItemsSource="{Binding EstadosPedido}" SelectedItem="{Binding Pedido.estadoPedido}" />
+            <Label Text="Estado del Pedido:" TextColor="White" />
+            <Picker ItemsSource="{Binding EstadosPedido}" 
+            SelectedItem="{Binding SelectedEstadoPedido, Mode=TwoWay}" 
+            BackgroundColor="#1E1E1E" 
+            TextColor="White" 
+            TitleColor="Gray" />
 
             <!-- Fue Pagado -->
-            <CheckBox IsChecked="{Binding Pedido.FuePagado}" />
-            <Label Text="¿Fue pagado?" />
+            <CheckBox IsChecked="{Binding Pedido.FuePagado}" Color="White" />
+            <Label Text="¿Fue pagado?" TextColor="White" />
 
             <!-- Gestión de productos -->
-            <Label Text="Productos:" FontAttributes="Bold" />
+            <Label Text="Productos:" FontAttributes="Bold" TextColor="White" />
             <Picker ItemsSource="{Binding Productos}" 
-   SelectedItem="{Binding SelectedProducto}" />
-            <Label Text="Cantidad:" />
-            <Entry Text="{Binding CantidadProducto}" Keyboard="Numeric" />
-            <Button Text="Agregar Producto" Command="{Binding AgregarProductoCommand}" />
+            SelectedItem="{Binding SelectedProducto}" 
+            BackgroundColor="#1E1E1E" 
+            TextColor="White" 
+            Title="Seleccione un producto" 
+            TitleColor="Gray" />
+            <Label Text="Cantidad:" TextColor="White" />
+            <Entry Text="{Binding CantidadProducto}" Keyboard="Numeric" BackgroundColor="#1E1E1E" TextColor="White" />
+            <Button Text="Agregar Producto" Command="{Binding AgregarProductoCommand}" BackgroundColor="#2196F3" TextColor="White" FontAttributes="Bold" CornerRadius="10" />
 
-            <ListView ItemsSource="{Binding DetallesProducto}">
-                <ListView.ItemTemplate>
+            <CollectionView ItemsSource="{Binding DetallesProducto}" BackgroundColor="#1E1E1E">
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding producto.nombre}" />
-                            <Label Text=" - " />
-                            <Label Text="{Binding cantidad}" />
+                        <StackLayout Orientation="Horizontal" Padding="5">
+                            <Label Text="{Binding producto.nombre}" TextColor="White" />
+                            <Label Text=" - " TextColor="White" />
+                            <Label Text="{Binding cantidad}" TextColor="White" />
                         </StackLayout>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Label Text="{Binding TotalProductos, StringFormat='Total productos: {0:C}'}" 
-  FontAttributes="Bold" TextColor="Green" />
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Label Text="{Binding TotalProductos, StringFormat='Total productos: {0:C}'}" FontAttributes="Bold" TextColor="Green" />
 
             <!-- Gestión de impresiones -->
-            <Label Text="Impresiones:" FontAttributes="Bold" />
+            <Label Text="Impresiones:" FontAttributes="Bold" TextColor="White" />
             <Picker ItemsSource="{Binding Impresiones}" 
-               SelectedItem="{Binding SelectedImpresion}" />
-            <Label Text="Cantidad:" />
-            <Entry Text="{Binding CantidadImpresion}" Keyboard="Numeric" />
-            <Button Text="Agregar Impresión" Command="{Binding AgregarImpresionCommand}" />
+            SelectedItem="{Binding SelectedImpresion}" 
+            BackgroundColor="#1E1E1E" 
+            TextColor="White" 
+            Title="Seleccione una impresión" 
+            TitleColor="Gray" />
+            <Label Text="Cantidad:" TextColor="White" />
+            <Entry Text="{Binding CantidadImpresion}" Keyboard="Numeric" BackgroundColor="#1E1E1E" TextColor="White" />
+            <Button Text="Agregar Impresión" Command="{Binding AgregarImpresionCommand}" BackgroundColor="#2196F3" TextColor="White" FontAttributes="Bold" CornerRadius="10" />
 
-            <ListView ItemsSource="{Binding DetallesImpresion}">
-                <ListView.ItemTemplate>
+            <CollectionView ItemsSource="{Binding DetallesImpresion}" BackgroundColor="#1E1E1E">
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding impresion.tamanio}" />
-                            <Label Text=" - " />
-                            <Label Text="{Binding cantidad}" />
+                        <StackLayout Orientation="Horizontal" Padding="5">
+                            <Label Text="{Binding impresion.tamanio}" TextColor="White" />
+                            <Label Text=" - " TextColor="White" />
+                            <Label Text="{Binding cantidad}" TextColor="White" />
                         </StackLayout>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Label Text="{Binding TotalImpresiones, StringFormat='Total impresiones: {0:C}'}" 
-  FontAttributes="Bold" TextColor="Blue" />
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Label Text="{Binding TotalImpresiones, StringFormat='Total impresiones: {0:C}'}" FontAttributes="Bold" TextColor="Blue" />
 
             <!-- Total general -->
-            <Label Text="{Binding TotalGeneral, StringFormat='Total general: {0:C}'}" 
-  FontAttributes="Bold" TextColor="Red" HorizontalOptions="Center" />
+            <Label Text="{Binding TotalGeneral, StringFormat='Total general: {0:C}'}" FontAttributes="Bold" TextColor="Red" HorizontalOptions="Center" />
 
-            <!-- Botón para crear pedido -->
-            <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" />
-            <Label Text="{Binding ActivityMessage}" IsVisible="{Binding IsBusy}" />
-            <Button Text="Guardar Pedido"
-        Command="{Binding GuardarPedidoCommand}" />
-
+            <!-- Botón para guardar pedido -->
+            <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" Color="White" />
+            <Label Text="{Binding ActivityMessage}" IsVisible="{Binding IsBusy}" TextColor="White" />
+            <Button Text="Guardar Pedido" Command="{Binding GuardarPedidoCommand}" BackgroundColor="#4CAF50" TextColor="White" FontAttributes="Bold" CornerRadius="10" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

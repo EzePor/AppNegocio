@@ -4,66 +4,102 @@
              x:Class="AppNegocio.Views.IniciarSesion.IniciarSesionView"
              xmlns:viewModels="clr-namespace:AppNegocio.ViewModels.IniciarSesionVM"
              Title="Inicio de sesión"
+             BackgroundColor="#121212"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.BindingContext>
         <viewModels:IniciarSesionViewModel />
     </ContentPage.BindingContext>
     <ScrollView>
-        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="30">
             <Label 
-                FontSize="36"
-                Text="Inicio de sesión en Gestión de Negocio"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-            <Grid RowDefinitions="2*,2*,2*,*,*,*" ColumnDefinitions="*,*">
+              FontSize="28"
+              Text="Login"
+              VerticalOptions="Center" 
+              HorizontalOptions="Center"
+              TextColor="White"
+              FontAttributes="Bold"
+              Margin="0,0,0,20"/>
+            <Label 
+             FontSize="28"
+             Text="Gestión de Negocio"
+             VerticalOptions="Center" 
+             HorizontalOptions="Center"
+             TextColor="White"
+             FontAttributes="Bold"
+             Margin="0,0,0,20"/>
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*,*">
                 <Label Grid.Row="0" Grid.Column="0" 
-                       HorizontalTextAlignment="End"
-                       VerticalTextAlignment="Center"
-                       Margin="40,20">Email:</Label>
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    Margin="0,10"
+                    TextColor="White"
+                    FontSize="18">Email:</Label>
                 <Entry Grid.Row="0" Grid.Column="1" 
-                       Text="{Binding Email}"
-                       Margin="0,10,0,10"></Entry>
+                    Text="{Binding Email}"
+                    Margin="0,0"
+                    TextColor="White"
+                    BackgroundColor="#1E1E1E"
+                    Placeholder="Ingrese su email"
+                    PlaceholderColor="#888888"/>
 
                 <Label Grid.Row="1" Grid.Column="0" 
-                       HorizontalTextAlignment="End"
-                       VerticalTextAlignment="Center"
-                       Margin="40,20">Contraseña:</Label>
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    Margin="0,10"
+                    TextColor="White"
+                    FontSize="18">Contraseña:</Label>
                 <Entry Grid.Row="1" Grid.Column="1" 
-                       Text="{Binding Password}"
-                        IsPassword="True"
-                       Margin="0,10,0,10"></Entry>
+                    Text="{Binding Password}"
+                    IsPassword="True"
+                    Margin="0,10"
+                    TextColor="White"
+                    BackgroundColor="#1E1E1E"
+                    Placeholder="Ingrese su contraseña"
+                    PlaceholderColor="#888888"/>
+
                 <CheckBox IsChecked="{Binding RecordarContraseña}"
-                          Grid.Row="2" Grid.Column="0"
-                          HorizontalOptions="End"
-                          VerticalOptions="Center"
-                          ></CheckBox>
-                <Label Grid.Row="2" Grid.Column="1"
+                       Grid.Row="2" Grid.Column="0"
+                       HorizontalOptions="End"
                        VerticalOptions="Center"
-                       >Recordar contraseña</Label>
+                       Color="White"/>
+                <Label Grid.Row="2" Grid.Column="1"
+                    VerticalOptions="Center"
+                    TextColor="White"
+                    FontSize="16">Recordar contraseña</Label>
 
                 <Button Text="Iniciar sesión"
-                        x:Name="btnIniciarSesion"
-                        Grid.Row="3" Grid.Column="0"
-                        Command="{Binding IniciarSesionCommand}"
-                        Grid.ColumnSpan="2"
-                        Margin="0,10,0,10"
-                        ></Button>
+                     x:Name="btnIniciarSesion"
+                     Grid.Row="3" Grid.Column="0"
+                     Command="{Binding IniciarSesionCommand}"
+                     Grid.ColumnSpan="2"
+                     Margin="0,20,0,10"
+                     BackgroundColor="#2196F3"
+                     TextColor="White"
+                     FontAttributes="Bold"
+                     CornerRadius="10"
+                     HeightRequest="50"/>
 
                 <Button Text="Registrarse"
-                        x:Name="btnRegistrarse"
-                        Grid.Row="4" Grid.Column="0"
-                        Command="{Binding RegistrarseCommand}"
-                        Grid.ColumnSpan="2"
-                    
-                        ></Button>
+                     x:Name="btnRegistrarse"
+                     Grid.Row="4" Grid.Column="0"
+                     Command="{Binding RegistrarseCommand}"
+                     Grid.ColumnSpan="2"
+                     Margin="0,10,0,10"
+                     BackgroundColor="#FF9800"
+                     TextColor="White"
+                     FontAttributes="Bold"
+                     CornerRadius="10"
+                     HeightRequest="50"/>
+
                 <ImageButton 
-                             Grid.Row="5" Grid.Column="0" 
-                             Grid.ColumnSpan="2"
-                             WidthRequest="400"
-                             Margin="0,10,0,10"
-                             x:Name="btnLoginGoogle"
-                            
-                             ></ImageButton>
+                          Grid.Row="5" Grid.Column="0" 
+                          Grid.ColumnSpan="2"
+                          WidthRequest="400"
+                          Margin="0,20,0,10"
+                          x:Name="btnLoginGoogle"
+                          Source="google_logo.png"
+                          BackgroundColor="Transparent"
+                          HeightRequest="50"/>
             </Grid>
         </VerticalStackLayout>
     </ScrollView>

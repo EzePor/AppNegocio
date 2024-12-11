@@ -3,33 +3,56 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:AppNegocio.ViewModels.Commons.ProdutosVM"  
              x:Class="AppNegocio.Views.Commons.ProductosV.AddEditProductosView"
-             Title="Agregar o editar Producto">
+             Title="Agregar o editar Producto"
+              BackgroundColor="#121212"
+ NavigationPage.HasNavigationBar="False">
 
     <ContentPage.BindingContext>
         <viewModels:AddEditProductoViewModel/>
     </ContentPage.BindingContext>
 
-    <VerticalStackLayout Padding="20">
+    <VerticalStackLayout Padding="20" Spacing="15">
         <Label 
-         Text="Agregar/Editar Cliente"
-         FontSize="Header"
-         HorizontalOptions="Center" />
+         Text="Agregar/Editar Producto"
+         FontSize="28"
+         HorizontalOptions="Center"
+         TextColor="White"
+         FontAttributes="Bold" />
 
-        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="Auto,*">
-            <Label Grid.Row="0" Grid.Column="0" Text="Nombre:" />
-            <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Nombre}" />
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="Auto,*" ColumnSpacing="10" RowSpacing="10">
+            <Label Grid.Row="0" Grid.Column="0" Text="Nombre:" TextColor="White" VerticalOptions="Center" />
+            <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Nombre}" BackgroundColor="#1E1E1E" TextColor="White" />
 
-            <Label Grid.Row="1" Grid.Column="0" Text="Rubro:" />
-            <Picker Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Rubros}" SelectedItem="{Binding Rubro}" />
+            <Label Grid.Row="1" Grid.Column="0" Text="Rubro:" TextColor="White" VerticalOptions="Center" />
+            <Picker Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Rubros}" SelectedItem="{Binding Rubro}" BackgroundColor="#1E1E1E" TextColor="White" />
 
-            <Label Grid.Row="2" Grid.Column="0" Text="Precio:" />
-            <Entry Grid.Row="2" Grid.Column="1" Text="{Binding Precio}" />
+            <Label Grid.Row="2" Grid.Column="0" Text="Precio:" TextColor="White" VerticalOptions="Center" />
+            <Entry Grid.Row="2" Grid.Column="1" Text="{Binding Precio}" BackgroundColor="#1E1E1E" TextColor="White" />
 
-            <Label Grid.Row="3" Grid.Column="0" Text="Stock:" />
-            <Entry Grid.Row="3" Grid.Column="1" Text="{Binding Stock}" />
+            <Label Grid.Row="3" Grid.Column="0" Text="Stock:" TextColor="White" VerticalOptions="Center" />
+            <Entry Grid.Row="3" Grid.Column="1" Text="{Binding Stock}" BackgroundColor="#1E1E1E" TextColor="White" />
 
-            <Button Grid.Row="4" Grid.Column="0" Text="Guardar" Command="{Binding GuardarCommand}" />
-            <Button Grid.Row="4" Grid.Column="1" Text="Cancelar" Command="{Binding CancelarCommand}" />
+            <HorizontalStackLayout Grid.Row="4" Grid.ColumnSpan="2" Spacing="10" HorizontalOptions="Center">
+                <Button 
+                 Text="Guardar"
+                 Command="{Binding GuardarCommand}" 
+                 WidthRequest="100"
+                 HeightRequest="40"
+                 BackgroundColor="#4CAF50"
+                 TextColor="White"
+                 FontAttributes="Bold"
+                 CornerRadius="10" />
+
+                <Button 
+                 Text="Cancelar"
+                 Command="{Binding CancelarCommand}" 
+                 WidthRequest="100"
+                 HeightRequest="40"
+                 BackgroundColor="#F44336"
+                 TextColor="White"
+                 FontAttributes="Bold"
+                 CornerRadius="10" />
+            </HorizontalStackLayout>
         </Grid>
     </VerticalStackLayout>
 </ContentPage>

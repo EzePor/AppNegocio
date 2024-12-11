@@ -3,7 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:AppNegocio.ViewModels.Commons.ClienteVM"
              x:Class="AppNegocio.Views.Commons.ClientesV.ClientesView"
-             Title="Clientes">
+             Title="Clientes"
+             BackgroundColor="#121212"
+NavigationPage.HasNavigationBar="False">
+    
     <ContentPage.BindingContext>
         <vm:ClientesViewModel />
     </ContentPage.BindingContext>
@@ -15,31 +18,35 @@
         <!-- Título y ActivityIndicator -->
         <VerticalStackLayout Grid.Row="0" Spacing="10">
             <Label 
-                Text="Clientes"
-                FontSize="Header"
-                HorizontalOptions="Center" 
-                VerticalOptions="Start" />
+             Text="Clientes"
+             FontSize="28"
+             HorizontalOptions="Center" 
+             VerticalOptions="Start"
+             TextColor="White"
+             FontAttributes="Bold" />
 
             <ActivityIndicator 
-                IsRunning="{Binding ActivityStart}" 
-                IsVisible="{Binding ActivityStart}" />
+             IsRunning="{Binding ActivityStart}" 
+             IsVisible="{Binding ActivityStart}"
+             Color="White" />
         </VerticalStackLayout>
 
         <!-- Lista de clientes dentro de un ScrollView para evitar overflow -->
         <ScrollView Grid.Row="1">
             <CollectionView
-                ItemsSource="{Binding Clientes}"
-                SelectedItem="{Binding ClienteCurrent}"
-                SelectionMode="Single"
-                HeightRequest="500">
+             ItemsSource="{Binding Clientes}"
+             SelectedItem="{Binding ClienteCurrent}"
+             SelectionMode="Single"
+             HeightRequest="500"
+             BackgroundColor="#1E1E1E">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid ColumnDefinitions="*,*,*,*,*" Padding="5">
-                            <Label Text="{Binding apellidoNombre}" Grid.Column="0" />
-                            <Label Text="{Binding cuitDni}" Grid.Column="1" />
-                            <Label Text="{Binding direccion}" Grid.Column="2"/>
-                            <Label Text="{Binding telefono}" Grid.Column="3"/>
-                            <Label Text="{Binding email}" Grid.Column="4"/>
+                            <Label Text="{Binding apellidoNombre}" Grid.Column="0" TextColor="White" />
+                            <Label Text="{Binding cuitDni}" Grid.Column="1" TextColor="White" />
+                            <Label Text="{Binding direccion}" Grid.Column="2" TextColor="White" />
+                            <Label Text="{Binding telefono}" Grid.Column="3" TextColor="White" />
+                            <Label Text="{Binding email}" Grid.Column="4" TextColor="White" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -49,22 +56,34 @@
         <!-- Botones en la parte inferior, siempre visibles -->
         <HorizontalStackLayout Grid.Row="2" Spacing="10" HorizontalOptions="Center" Margin="0,10,0,0">
             <Button 
-                Text="Agregar"
-                Command="{Binding AgregarCommand}" 
-                WidthRequest="100"
-                HeightRequest="40"/>
+             Text="Agregar"
+             Command="{Binding AgregarCommand}" 
+             WidthRequest="100"
+             HeightRequest="40"
+             BackgroundColor="#2196F3"
+             TextColor="White"
+             FontAttributes="Bold"
+             CornerRadius="10" />
 
             <Button 
-                Text="Editar"
-                Command="{Binding EditarCommand}" 
-                WidthRequest="100"
-                HeightRequest="40"/>
+             Text="Editar"
+             Command="{Binding EditarCommand}" 
+             WidthRequest="100"
+             HeightRequest="40"
+             BackgroundColor="#FF9800"
+             TextColor="White"
+             FontAttributes="Bold"
+             CornerRadius="10" />
 
             <Button 
-                Text="Eliminar"
-                Command="{Binding EliminarCommand}" 
-                WidthRequest="100"
-                HeightRequest="40"/>
+             Text="Eliminar"
+             Command="{Binding EliminarCommand}" 
+             WidthRequest="100"
+             HeightRequest="40"
+             BackgroundColor="#F44336"
+             TextColor="White"
+             FontAttributes="Bold"
+             CornerRadius="10" />
         </HorizontalStackLayout>
     </Grid>
 </ContentPage>

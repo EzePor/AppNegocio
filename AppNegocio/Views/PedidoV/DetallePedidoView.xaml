@@ -3,52 +3,71 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:AppNegocio.ViewModels.PedidoVM"
              x:Class="AppNegocio.Views.PedidoV.DetallePedidoView"
-             Title="DetallePedidoView">
+             Title="Detalle del Pedido"
+             BackgroundColor="#121212">
+    
     <ContentPage.BindingContext>
         <viewModels:DetallePedidoViewModel/>
     </ContentPage.BindingContext>
 
-    <StackLayout Padding="10">
-        <Label Text="Detalles del Pedido" FontAttributes="Bold" FontSize="20" />
-        <Label Text="{Binding Pedido.fechaPedido}" />
-        <Label Text="{Binding Pedido.cliente.apellidoNombre}" />
-        <Label Text="{Binding Pedido.estadoPedido}"/>
+    <ScrollView>
+        <StackLayout Padding="10" Spacing="10">
+            <Label Text="Detalles del Pedido" FontAttributes="Bold" FontSize="24" TextColor="White" HorizontalOptions="Center" />
 
-        <Label Text="{Binding Pedido.modoPago.nombre}" />
-        
-        <!-- Checkbox para el campo fuePagado -->
-        <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
-            <Label Text="¿Fue Pagado?" VerticalOptions="Center"/>
-            <CheckBox IsChecked="{Binding Pedido.FuePagado}" VerticalOptions="Center"/>
+            <Frame BackgroundColor="#1E1E1E" BorderColor="#2196F3" CornerRadius="10" Padding="10">
+                <StackLayout Spacing="5">
+                    <Label Text="Cliente:" FontAttributes="Bold" FontSize="18" TextColor="White" />
+                    <Label Text="{Binding Pedido.cliente.apellidoNombre}" FontSize="16" TextColor="White" />
+                    <Label Text="Fecha del Pedido:" FontAttributes="Bold" FontSize="18" TextColor="White" />
+                    <Label Text="{Binding Pedido.fechaPedido, StringFormat='{0:dd/MM/yyyy}'}" FontSize="16" TextColor="White" />
+                    <Label Text="Estado del Pedido:" FontAttributes="Bold" FontSize="18" TextColor="White" />
+                    <Label Text="{Binding Pedido.estadoPedido}" FontSize="16" TextColor="White" />
+                    <Label Text="Modo de Pago:" FontAttributes="Bold" FontSize="18" TextColor="White" />
+                    <Label Text="{Binding Pedido.modoPago.nombre}" FontSize="16" TextColor="White" />
+                    <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                        <Label Text="¿Fue Pagado?" VerticalOptions="Center" FontSize="18" TextColor="White" />
+                        <CheckBox IsChecked="{Binding Pedido.FuePagado}" VerticalOptions="Center" />
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
+            <Label Text="Productos:" FontAttributes="Bold" FontSize="20" TextColor="White" Margin="0,10,0,0" />
+            <CollectionView ItemsSource="{Binding DetalleProductos}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="#1E1E1E" BorderColor="#2196F3" CornerRadius="10" Padding="10" Margin="5">
+                            <StackLayout Spacing="5">
+                                <StackLayout Orientation="Horizontal" Spacing="10">
+                                    <Label Text="{Binding producto.nombre}" FontAttributes="Bold" FontSize="16" TextColor="White" />
+                                    <Label Text=" - " FontSize="16" TextColor="White" VerticalOptions="Center" />
+                                    <Label Text="{Binding cantidad}" FontSize="14" TextColor="White" />
+                                </StackLayout>
+                                <Label Text="{Binding TotalF}" FontSize="14" TextColor="Green" />
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Impresiones:" FontAttributes="Bold" FontSize="20" TextColor="White" Margin="10,20,0,0" />
+            <CollectionView ItemsSource="{Binding DetalleImpresiones}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="#1E1E1E" BorderColor="#2196F3" CornerRadius="10" Padding="10" Margin="5">
+                            <StackLayout Spacing="5">
+                                <StackLayout Orientation="Horizontal" Spacing="10">
+                                    <Label Text="{Binding impresion.tamanio}" FontAttributes="Bold" FontSize="16" TextColor="White" />
+                                    <Label Text=" - " FontSize="16" TextColor="White" VerticalOptions="Center" />
+                                    <Label Text="{Binding cantidad}" FontSize="14" TextColor="White" />
+                                </StackLayout>
+                                <Label Text="{Binding TotalF}" FontSize="14" TextColor="Green" />
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="{Binding Pedido.TotalPedidoF, StringFormat='Total Pedido: {0:C}'}" FontSize="Medium" FontAttributes="Bold" TextColor="Green" HorizontalOptions="End" />
         </StackLayout>
-
-
-
-        <Label Text="Productos:" FontAttributes="Bold" Margin="0,10,0,0" />
-        <CollectionView ItemsSource="{Binding DetalleProductos}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout>
-                        <Label Text="{Binding producto.nombre}" />
-                        <Label Text="{Binding cantidad}" />
-                        <Label Text="{Binding TotalF}" />
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-
-        <Label Text="Impresiones:" FontAttributes="Bold" Margin="10,20,0,0" />
-        <CollectionView ItemsSource="{Binding DetalleImpresiones}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout>
-                        <Label Text="{Binding impresion.tamanio}" />
-                        <Label Text="{Binding cantidad}" />
-                        <Label Text="{Binding TotalF}" />
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-        <Label Text="{Binding Pedido.TotalPedidoF, StringFormat='Total Pedido: {0:C}'}" FontSize="Medium" />
-    </StackLayout>
+    </ScrollView>
 </ContentPage>

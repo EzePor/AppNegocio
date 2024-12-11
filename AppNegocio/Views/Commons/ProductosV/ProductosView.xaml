@@ -3,7 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:AppNegocio.ViewModels.Commons.ProdutosVM"
              x:Class="AppNegocio.Views.Commons.ProductosV.ProductosView"
-             Title="Productos">
+             Title="Productos"
+             BackgroundColor="#121212"
+NavigationPage.HasNavigationBar="False">
+    
     <ContentPage.BindingContext>
         <vm:ProductosViewModel />
     </ContentPage.BindingContext>
@@ -15,30 +18,33 @@
         <VerticalStackLayout Grid.Row="0" Spacing="10">
             <Label 
              Text="Productos"
-             FontSize="Header"
+             FontSize="28"
              HorizontalOptions="Center" 
-             VerticalOptions="Start" />
+             VerticalOptions="Start"
+             TextColor="White"
+             FontAttributes="Bold" />
 
             <ActivityIndicator 
              IsRunning="{Binding ActivityStart}" 
-             IsVisible="{Binding ActivityStart}" />
+             IsVisible="{Binding ActivityStart}"
+             Color="White" />
         </VerticalStackLayout>
 
-        <!-- Lista de clientes dentro de un ScrollView para evitar overflow -->
+        <!-- Lista de productos dentro de un ScrollView para evitar overflow -->
         <ScrollView Grid.Row="1">
             <CollectionView
              ItemsSource="{Binding Productos}"
              SelectedItem="{Binding ProductoCurrent}"
              SelectionMode="Single"
-             HeightRequest="500">
+             HeightRequest="500"
+             BackgroundColor="#1E1E1E">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid ColumnDefinitions="*,*,*,*,*" Padding="5">
-                            <Label Text="{Binding nombre}" Grid.Column="0" />
-                            <Label Text="{Binding Rubro}" Grid.Column="1" />
-                            <Label Text="{Binding precioF}" Grid.Column="2"/>
-                            <Label Text="{Binding stock}" Grid.Column="3" />
-
+                        <Grid ColumnDefinitions="*,*,*,*" Padding="5">
+                            <Label Text="{Binding nombre}" Grid.Column="0" TextColor="White" />
+                            <Label Text="{Binding Rubro}" Grid.Column="1" TextColor="White" />
+                            <Label Text="{Binding precioF}" Grid.Column="2" TextColor="White" />
+                            <Label Text="{Binding stock}" Grid.Column="3" TextColor="White" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -51,19 +57,31 @@
              Text="Agregar"
              Command="{Binding AgregarCommand}" 
              WidthRequest="100"
-             HeightRequest="40"/>
+             HeightRequest="40"
+             BackgroundColor="#2196F3"
+             TextColor="White"
+             FontAttributes="Bold"
+             CornerRadius="10" />
 
             <Button 
              Text="Editar"
              Command="{Binding EditarCommand}" 
              WidthRequest="100"
-             HeightRequest="40"/>
+             HeightRequest="40"
+             BackgroundColor="#FF9800"
+             TextColor="White"
+             FontAttributes="Bold"
+             CornerRadius="10" />
 
             <Button 
              Text="Eliminar"
              Command="{Binding EliminarCommand}" 
              WidthRequest="100"
-             HeightRequest="40"/>
+             HeightRequest="40"
+             BackgroundColor="#F44336"
+             TextColor="White"
+             FontAttributes="Bold"
+             CornerRadius="10" />
         </HorizontalStackLayout>
     </Grid>
 </ContentPage>

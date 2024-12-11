@@ -129,6 +129,7 @@ namespace AppNegocio.ViewModels.PedidoVM
             }
         }
 
+
         public Command DetalleCommand { get; } 
        public Command EditarCommand { get; }
 
@@ -197,19 +198,32 @@ namespace AppNegocio.ViewModels.PedidoVM
             var pedidos = await pedidoService.GetAllAsync();
             Pedidos = new ObservableCollection<Pedido>(pedidos);
 
+            // Cargar todos los modos de pago
+            var modosPago = await modoPagoService.GetAllAsync();
+            var modosPagoDict = modosPago.ToDictionary(m => m.id);
+
+            // Asignar los modos de pago a los pedidos
             foreach (var pedido in pedidos)
             {
-                if (pedido.ModoPagoId > 0)
+                if (pedido.ModoPagoId > 0 && modosPagoDict.TryGetValue(pedido.ModoPagoId, out var modoPago))
                 {
-                    pedido.modoPago = await modoPagoService.GetByIdAsync(pedido.ModoPagoId);
+                    pedido.modoPago = modoPago;
                 }
             }
 
+            //foreach (var pedido in pedidos)
+            //{
+            //    if (pedido.ModoPagoId > 0)
+            //    {
+            //        pedido.modoPago = await modoPagoService.GetByIdAsync(pedido.ModoPagoId);
+            //    }
+            //}
+
             // Verificar que ModoPago se asigna correctamente
-            foreach (var pedido in Pedidos)
-            {
-                Debug.WriteLine($"Pedido ID: {pedido.id}, ModoPago: {pedido.modoPago?.nombre}");
-            }
+            //foreach (var pedido in Pedidos)
+            //{
+            //    Debug.WriteLine($"Pedido ID: {pedido.id}, ModoPago: {pedido.modoPago?.nombre}");
+            //}
 
 
             ActivityStart = false;

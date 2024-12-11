@@ -19,18 +19,27 @@
   
     
     Shell.FlyoutBehavior="Disabled"
-    Title="AppNegocio">
+    Title="AppNegocio"
+    BackgroundColor="#121212"
+   Shell.ForegroundColor="White"
+   Shell.TitleColor="White"
+   Shell.DisabledColor="#555555"
+   Shell.UnselectedColor="#888888"
+   Shell.TabBarBackgroundColor="#1E1E1E"
+   Shell.TabBarForegroundColor="White"
+   Shell.TabBarTitleColor="White"
+   Shell.TabBarUnselectedColor="#888888">
 
     <Shell.BindingContext>
         <viewmodels:NegocioShellViewModel />
     </Shell.BindingContext>
 
     <Shell.FlyoutHeader>
-        <contentviews:FlyoutHeader />
+        <contentviews:FlyoutHeader  BackgroundColor="#1E1E1E"  />
     </Shell.FlyoutHeader>
 
     <Shell.FlyoutFooter>
-        <contentviews:FlyoutFooter />
+        <contentviews:FlyoutFooter  BackgroundColor="#1E1E1E"   />
     </Shell.FlyoutFooter>
 
     <FlyoutItem Route="nuestra_app" 
@@ -105,7 +114,8 @@
     </FlyoutItem>
     <MenuItem Text="Cerrar sesión"
       Command="{Binding LogoutCommand}"
-      IconImageSource="random.png"/>
+      IconImageSource="random.png"
+         />
 
     <ShellContent
         Title="Iniciar sesión"

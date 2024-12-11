@@ -1,31 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppNegocio.MainPage">
+             x:Class="AppNegocio.MainPage"
+             BackgroundColor="#121212">
+    <Grid VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+        <ScrollView>
+            <VerticalStackLayout
+            Padding="30,50"
+            Spacing="25"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <Image
-                Source="dotnet_bot.png"
-                HeightRequest="185"
+                <Image
+                Source="gestion500.png"
+                HeightRequest="200"
                 Aspect="AspectFit"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
                 SemanticProperties.Description="dot net bot in a race car number eight" />
 
-            <Label
+                <Label
                 Text="Bienvenidos"
-                Style="{StaticResource Headline}"
+                FontSize="36"
+                FontAttributes="Bold"
+                TextColor="White"
+                HorizontalOptions="Center"
                 SemanticProperties.HeadingLevel="Level1" />
 
-            <Label
+                <Label
                 Text="Gestión de Negocio"
+                FontSize="24"
+                TextColor="White"
+                HorizontalOptions="Center"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
 
-           
-        </VerticalStackLayout>
-    </ScrollView>
 
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

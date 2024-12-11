@@ -88,7 +88,20 @@ namespace AppNegocio.ViewModels.PedidoVM
             }
         }
 
+        private EstadoPedidoEnum selectedEstadoPedido;
+        public EstadoPedidoEnum SelectedEstadoPedido
+        {
+            get => selectedEstadoPedido;
+            set
+            {
+                selectedEstadoPedido = value;
+                OnPropertyChanged();
+            }
+        }
 
+
+
+  
 
         // Propiedades para los elementos seleccionados
         private Producto selectedProducto;
@@ -224,6 +237,13 @@ namespace AppNegocio.ViewModels.PedidoVM
             impresionService = new GenericService<Impresion>();
             pedidoService = new GenericService<Pedido>();
 
+            // Inicializar la colección de estados del pedido
+            EstadosPedido = new ObservableCollection<EstadoPedidoEnum>
+    {
+        EstadoPedidoEnum.Recepcionado,
+        EstadoPedidoEnum.PendientePago
+    };
+
             DetallesProducto = new ObservableCollection<DetalleProducto>();
             DetallesImpresion = new ObservableCollection<DetalleImpresion>();
             Detalles = new ObservableCollection<object>();
@@ -242,7 +262,7 @@ namespace AppNegocio.ViewModels.PedidoVM
             
         }
 
-       
+
 
         //public EditarPedidoViewModel(Pedido pedido) : this()
         //{
@@ -257,6 +277,37 @@ namespace AppNegocio.ViewModels.PedidoVM
         //    // No hacer nada o inicializar valores predeterminados
         //}
 
+        public async Task CargarListas()
+        {
+            Clientes = new ObservableCollection<Cliente>(await clienteService.GetAllAsync());
+            ModosPago = new ObservableCollection<ModoPago>(await modoPagoService.GetAllAsync());
+            EstadosPedido = new ObservableCollection<EstadoPedidoEnum>(Enum.GetValues(typeof(EstadoPedidoEnum)).Cast<EstadoPedidoEnum>());
+
+            OnPropertyChanged(nameof(Clientes));
+            OnPropertyChanged(nameof(ModosPago));
+            OnPropertyChanged(nameof(EstadosPedido));
+        }
+
+        private async Task CargarDatos()
+        {
+
+            Clientes = new ObservableCollection<Cliente>(await clienteService.GetAllAsync());
+            ModosPago = new ObservableCollection<ModoPago>(await modoPagoService.GetAllAsync());
+            Productos = new ObservableCollection<Producto>(await productoService.GetAllAsync());
+            Impresiones = new ObservableCollection<Impresion>(await impresionService.GetAllAsync());
+            EstadosPedido = new ObservableCollection<EstadoPedidoEnum>(Enum.GetValues(typeof(EstadoPedidoEnum)).Cast<EstadoPedidoEnum>());
+
+            // Inicializar las propiedades seleccionadas
+            SelectedCliente = Clientes.FirstOrDefault(c => c.id == Pedido.ClienteId);
+            SelectedModoPago = ModosPago.FirstOrDefault(m => m.id == Pedido.ModoPagoId);
+            Pedido.estadoPedido = EstadosPedido.FirstOrDefault(e => e == Pedido.estadoPedido);
+            // Notificar cambios
+            OnPropertyChanged(nameof(SelectedCliente));
+            OnPropertyChanged(nameof(SelectedModoPago));
+            OnPropertyChanged(nameof(Pedido));
+        }
+
+
         public async void CargarPedido()
         {
             try
@@ -269,12 +320,19 @@ namespace AppNegocio.ViewModels.PedidoVM
                 {
                     // Asignar los datos del pedido existente a NuevoPedido
                     NuevoPedido = pedidoExistente;
+                    OnPropertyChanged(nameof(NuevoPedido)); // Notificar cambio
 
                     // Asignar otros datos necesarios
                     SelectedCliente = pedidoExistente.cliente;
+                    OnPropertyChanged(nameof(SelectedCliente)); // Notificar cambio
                     SelectedModoPago = pedidoExistente.modoPago;
+                    OnPropertyChanged(nameof(SelectedModoPago)); // Notificar cambio
+                    EstadosPedido = new ObservableCollection<EstadoPedidoEnum>(Enum.GetValues(typeof(EstadoPedidoEnum)).Cast<EstadoPedidoEnum>());
+                    OnPropertyChanged(nameof(EstadosPedido)); // Notificar cambio
                     DetallesProducto = new ObservableCollection<DetalleProducto>(pedidoExistente.DetallesProducto);
+                    OnPropertyChanged(nameof(DetallesProducto)); // Notificar cambio
                     DetallesImpresion = new ObservableCollection<DetalleImpresion>(pedidoExistente.DetallesImpresion);
+                    OnPropertyChanged(nameof(DetallesImpresion)); // Notificar cambio
                 }
                 else
                 {
@@ -338,6 +396,11 @@ namespace AppNegocio.ViewModels.PedidoVM
                 NuevoPedido.ModoPagoId = SelectedModoPago.id;
                 NuevoPedido.modoPago = SelectedModoPago;
 
+
+                NuevoPedido.estadoPedido = SelectedEstadoPedido;
+
+
+
                 if (!DetallesProducto.Any() && !DetallesImpresion.Any())
                 {
                     await App.Current.MainPage.DisplayAlert("Error", "Debe agregar al menos un producto o impresión.", "OK");
@@ -367,6 +430,9 @@ namespace AppNegocio.ViewModels.PedidoVM
                 await App.Current.MainPage.DisplayAlert("Éxito", "Pedido actualizado correctamente.", "OK");
 
                 LimpiarFormulario();
+
+                // Navegar a ResumenPedidoView
+                await Shell.Current.GoToAsync("//ListaResumenes");
             }
             catch (Exception ex)
             {
@@ -389,12 +455,18 @@ namespace AppNegocio.ViewModels.PedidoVM
             Detalles.Clear();
             CantidadProducto = 0;
             CantidadImpresion = 0;
-            SelectedProducto = null;
-            SelectedImpresion = null;
-            SelectedCliente = null;
-            SelectedModoPago = null;
-            estadosPedido = null;
+            SelectedProducto = default!;
+            SelectedImpresion = default!;
+            SelectedCliente = default!;
+            SelectedModoPago = default!;
+            SelectedEstadoPedido = default!;
+            EstadosPedido = new ObservableCollection<EstadoPedidoEnum>();
+            PrecioAcumulado = 0;
+            TotalProductos = 0;
+            TotalImpresiones = 0;
 
+            OnPropertyChanged(nameof(NuevoPedido)); // Notificar que NuevoPedido ha cambiado
+            OnPropertyChanged(nameof(TotalGeneral)); // Notificar cambio de TotalGeneral
         }
 
         private decimal precioAcumulado;
@@ -608,24 +680,7 @@ namespace AppNegocio.ViewModels.PedidoVM
         }
 
 
-        private async Task CargarDatos()
-        {
-        
-             Clientes = new ObservableCollection<Cliente>(await clienteService.GetAllAsync());
-             ModosPago = new ObservableCollection<ModoPago>(await modoPagoService.GetAllAsync());
-             Productos = new ObservableCollection<Producto>(await productoService.GetAllAsync());
-             Impresiones = new ObservableCollection<Impresion>(await impresionService.GetAllAsync());
-             EstadosPedido = new ObservableCollection<EstadoPedidoEnum>(Enum.GetValues(typeof(EstadoPedidoEnum)).Cast<EstadoPedidoEnum>());
-
-               // Inicializar las propiedades seleccionadas
-             SelectedCliente = Clientes.FirstOrDefault(c => c.id == Pedido.ClienteId);
-             SelectedModoPago = ModosPago.FirstOrDefault(m => m.id == Pedido.ModoPagoId);
-            Pedido.estadoPedido = EstadosPedido.FirstOrDefault(e => e == Pedido.estadoPedido);
-            // Notificar cambios
-            OnPropertyChanged(nameof(SelectedCliente));
-            OnPropertyChanged(nameof(SelectedModoPago));
-            OnPropertyChanged(nameof(Pedido));
-        }
+       
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

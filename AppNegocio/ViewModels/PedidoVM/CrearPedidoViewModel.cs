@@ -163,6 +163,7 @@ namespace AppNegocio.ViewModels.PedidoVM
 
             NuevoPedido = new Pedido
             {
+                fechaPedido = DateTime.Now,
                 DetallesProducto = new List<DetalleProducto>(),
                 DetallesImpresion = new List<DetalleImpresion>()
             };
@@ -178,8 +179,6 @@ namespace AppNegocio.ViewModels.PedidoVM
 
         private async void CrearPedido(object obj)
         {
-            // necesito crear la lógica para guardar un pedido completo según el modelo de pedido 
-
             try
             {
                 // Validar datos requeridos
@@ -245,12 +244,17 @@ namespace AppNegocio.ViewModels.PedidoVM
             Detalles.Clear();
             CantidadProducto = 0;
             CantidadImpresion = 0;
-            SelectedProducto = null;
-            SelectedImpresion = null;
-            SelectedCliente = null;
-            SelectedModoPago = null;
-            estadosPedido = null;
-            
+            SelectedProducto = default!;
+            SelectedImpresion = default!;
+            SelectedCliente = default!;
+            SelectedModoPago = default!;
+            estadosPedido = new ObservableCollection<EstadoPedidoEnum>();
+            PrecioAcumulado = 0;
+            TotalProductos = 0;
+            TotalImpresiones = 0;
+            EstadosPedido = new ObservableCollection<EstadoPedidoEnum>();
+            OnPropertyChanged(nameof(TotalGeneral)); // Notificar cambio de TotalGeneral
+
         }
 
         private decimal precioAcumulado;

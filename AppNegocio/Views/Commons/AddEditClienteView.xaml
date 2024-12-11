@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:AppNegocio.ViewModels.Commons.ClientesViewModels"
              x:Class="AppNegocio.Views.Commons.AddEditClienteView"
-             Title="Agregar o Editar cliente">
+             Title="Agregar o Editar cliente"
+             BackgroundColor="#121212"
+             NavigationPage.HasNavigationBar="False">
 
     <ContentPage.BindingContext>
         <viewModels:AddEditClienteViewModel />
@@ -11,39 +13,60 @@
 
 
 
-    <VerticalStackLayout Padding="20">
+    <VerticalStackLayout Padding="20" Spacing="15">
         <Label 
-            Text="Agregar/Editar Cliente"
-            FontSize="Header"
-            HorizontalOptions="Center" />
+         Text="Agregar/Editar Cliente"
+         FontSize="28"
+         HorizontalOptions="Center"
+         TextColor="White"
+         FontAttributes="Bold" />
 
-        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="Auto,*">
-            <Label Grid.Row="0" Grid.Column="0" Text="Apellido y Nombre:" />
-            <Entry Grid.Row="0" Grid.Column="1" Text="{Binding ApellidoNombre}" />
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="Auto,*" ColumnSpacing="10" RowSpacing="10">
+            <Label Grid.Row="0" Grid.Column="0" Text="Apellido y Nombre:" TextColor="White" VerticalOptions="Center" />
+            <Entry Grid.Row="0" Grid.Column="1" Text="{Binding ApellidoNombre}" BackgroundColor="#1E1E1E" TextColor="White" />
 
-            <Label Grid.Row="1" Grid.Column="0" Text="Cuit/Dni:" />
-            <Entry Grid.Row="1" Grid.Column="1" Text="{Binding CuitDni}" />
+            <Label Grid.Row="1" Grid.Column="0" Text="Cuit/Dni:" TextColor="White" VerticalOptions="Center" />
+            <Entry Grid.Row="1" Grid.Column="1" Text="{Binding CuitDni}" BackgroundColor="#1E1E1E" TextColor="White" />
 
-            <Label Grid.Row="2" Grid.Column="0" Text="Email:" />
-            <Entry Grid.Row="2" Grid.Column="1" Text="{Binding Email}" />
+            <Label Grid.Row="2" Grid.Column="0" Text="Email:" TextColor="White" VerticalOptions="Center" />
+            <Entry Grid.Row="2" Grid.Column="1" Text="{Binding Email}" BackgroundColor="#1E1E1E" TextColor="White" />
 
-            <Label Grid.Row="3" Grid.Column="0" Text="Dirección:" />
-            <Entry Grid.Row="3" Grid.Column="1" Text="{Binding Direccion}" />
+            <Label Grid.Row="3" Grid.Column="0" Text="Dirección:" TextColor="White" VerticalOptions="Center" />
+            <Entry Grid.Row="3" Grid.Column="1" Text="{Binding Direccion}" BackgroundColor="#1E1E1E" TextColor="White" />
 
-            <Label Grid.Row="4" Grid.Column="0" Text="Teléfono:" />
-            <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Telefono}" />
+            <Label Grid.Row="4" Grid.Column="0" Text="Teléfono:" TextColor="White" VerticalOptions="Center" />
+            <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Telefono}" BackgroundColor="#1E1E1E" TextColor="White" />
 
-            <Label Grid.Row="5" Grid.Column="0" Text="Localidad:" />
-            <Entry Grid.Row="5" Grid.Column="1" Text="{Binding Localidad}" />
+            <Label Grid.Row="5" Grid.Column="0" Text="Localidad:" TextColor="White" VerticalOptions="Center" />
+            <Entry Grid.Row="5" Grid.Column="1" Text="{Binding Localidad}" BackgroundColor="#1E1E1E" TextColor="White" />
 
-            <Label Grid.Row="6" Grid.Column="0" Text="Código Postal:" />
-            <Entry Grid.Row="6" Grid.Column="1" Text="{Binding CodigoPostal}" />
+            <Label Grid.Row="6" Grid.Column="0" Text="Código Postal:" TextColor="White" VerticalOptions="Center" />
+            <Entry Grid.Row="6" Grid.Column="1" Text="{Binding CodigoPostal}" BackgroundColor="#1E1E1E" TextColor="White" />
 
-            <Label Grid.Row="7" Grid.Column="0" Text="Provincia:" />
-            <Entry Grid.Row="7" Grid.Column="1" Text="{Binding Provincia}" />
+            <Label Grid.Row="7" Grid.Column="0" Text="Provincia:" TextColor="White" VerticalOptions="Center" />
+            <Entry Grid.Row="7" Grid.Column="1" Text="{Binding Provincia}" BackgroundColor="#1E1E1E" TextColor="White" />
 
-            <Button Grid.Row="8" Grid.Column="0" Text="Guardar" Command="{Binding GuardarCommand}" />
-            <Button Grid.Row="8" Grid.Column="1" Text="Cancelar" Command="{Binding CancelarCommand}" />
+            <HorizontalStackLayout Grid.Row="8" Grid.ColumnSpan="2" Spacing="10" HorizontalOptions="Center">
+                <Button 
+                 Text="Guardar"
+                 Command="{Binding GuardarCommand}" 
+                 WidthRequest="100"
+                 HeightRequest="40"
+                 BackgroundColor="#4CAF50"
+                 TextColor="White"
+                 FontAttributes="Bold"
+                 CornerRadius="10" />
+
+                <Button 
+                 Text="Cancelar"
+                 Command="{Binding CancelarCommand}" 
+                 WidthRequest="100"
+                 HeightRequest="40"
+                 BackgroundColor="#F44336"
+                 TextColor="White"
+                 FontAttributes="Bold"
+                 CornerRadius="10" />
+            </HorizontalStackLayout>
         </Grid>
     </VerticalStackLayout>
 </ContentPage>
