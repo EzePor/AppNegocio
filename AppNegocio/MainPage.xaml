@@ -13,7 +13,7 @@
 
                 <Image
                 Source="gestion500.png"
-                HeightRequest="200"
+                HeightRequest="300"
                 Aspect="AspectFit"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
@@ -28,7 +28,7 @@
                 SemanticProperties.HeadingLevel="Level1" />
 
                 <Label
-                Text="Gestión de Negocio"
+                Text="Usuario registrado"
                 FontSize="24"
                 TextColor="White"
                 HorizontalOptions="Center"

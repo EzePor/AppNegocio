@@ -305,6 +305,16 @@ namespace AppNegocio.ViewModels.PedidoVM
             OnPropertyChanged(nameof(SelectedCliente));
             OnPropertyChanged(nameof(SelectedModoPago));
             OnPropertyChanged(nameof(Pedido));
+            OnPropertyChanged(nameof(EstadosPedido));
+
+            // Notificar cambios
+            OnPropertyChanged(nameof(Clientes));
+            OnPropertyChanged(nameof(ModosPago));
+            OnPropertyChanged(nameof(Productos));
+            OnPropertyChanged(nameof(Impresiones));
+            OnPropertyChanged(nameof(EstadosPedido));
+
+
         }
 
 
@@ -464,6 +474,11 @@ namespace AppNegocio.ViewModels.PedidoVM
             PrecioAcumulado = 0;
             TotalProductos = 0;
             TotalImpresiones = 0;
+
+            OnPropertyChanged(nameof(SelectedCliente));
+            OnPropertyChanged(nameof(SelectedModoPago));
+            OnPropertyChanged(nameof(Pedido));
+            OnPropertyChanged(nameof(EstadosPedido));
 
             OnPropertyChanged(nameof(NuevoPedido)); // Notificar que NuevoPedido ha cambiado
             OnPropertyChanged(nameof(TotalGeneral)); // Notificar cambio de TotalGeneral

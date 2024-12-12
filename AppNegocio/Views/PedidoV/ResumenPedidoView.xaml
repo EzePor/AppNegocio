@@ -55,10 +55,10 @@
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                             <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto" Padding="5" ColumnSpacing="10">
-                                <Label Text="{Binding fechaPedido, StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="0" TextColor="White" />
+                                <Label Text="{Binding fechaPedido, StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="0" FontSize="10"  TextColor="White" />
                                 <Label Text="{Binding cliente}" Grid.Column="1" TextColor="White" />
                                 <Label Text="{Binding modoPago}" Grid.Column="2" TextColor="White" />
-                                <Label Text="{Binding TotalPedidoF}" Grid.Column="3" TextColor="Green" FontAttributes="Bold" />
+                                <Label Text="{Binding TotalPedidoF, StringFormat='${0}'}" Grid.Column="3" TextColor="Green" FontAttributes="Bold" />
                                 <Label Text="{Binding estadoPedido}" Grid.Column="4" TextColor="White" />
                             </Grid>
                         </Border>

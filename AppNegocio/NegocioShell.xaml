@@ -28,7 +28,7 @@
    Shell.TabBarBackgroundColor="#1E1E1E"
    Shell.TabBarForegroundColor="White"
    Shell.TabBarTitleColor="White"
-   Shell.TabBarUnselectedColor="#888888">
+   Shell.TabBarUnselectedColor="#53ccf9">
 
     <Shell.BindingContext>
         <viewmodels:NegocioShellViewModel />
@@ -52,61 +52,61 @@
               <!--CLIENTES-->
         <Tab Title="Clientes"
          Route="clientes"
-         Icon="paw.png">
+         Icon="mano.svg">
             <ShellContent
                 Title="Lista"
-                Icon="cat.png"
+                Icon="mano.svg"
                 ContentTemplate="{DataTemplate commons:ClientesView}"
                 Route="ListaClientes" />
             <ShellContent
                 Title="Agregar cliente"
-                Icon="dog.png"
+                Icon="mano.svg"
                 ContentTemplate="{DataTemplate common:AddEditClienteView  }"
                 Route="AgregarEditarCliente" />
         </Tab>
           <!-- PRODUCTOS-->
         <Tab Title="Productos"
          Route="productos"
-         Icon="paw.png">
+         Icon="mano.svg">
             <ShellContent
                 Title="Lista"
-                Icon="cat.png"
+                Icon="mano.svg"
                 ContentTemplate="{DataTemplate product:ProductosView}"
                 Route="ListaProductos" />
             <ShellContent
                 Title="Agregar producto"
-                Icon="dog.png"
+                Icon="mano.svg"
                 ContentTemplate="{DataTemplate addEditproduct:AddEditProductosView}"
                 Route="AgregarEditarProducto" />
             </Tab>
        <!--CREARPEDIDO-->
         <Tab Title="Crear Pedido"
   Route="pedidos"
-  Icon="paw.png">
+  Icon="mano.svg">
             <ShellContent
          Title="Pedido"
-         Icon="cat.png"
+         Icon="mano.svg"
          ContentTemplate="{DataTemplate pedido:CrearPedidoView }"
          Route="CrearPedido" />
             <ShellContent
          Title="Editar Pedido"
-         Icon="dog.png"
+         Icon="mano.svg"
          ContentTemplate="{DataTemplate editarpedido:EditarPedidoView}"
          Route="EditarPedidoView" />
         </Tab>
         
         <!--RESUMENPEDIDO-->
-        <Tab Title="Resúmen de Pedidos"
+        <Tab Title="Resumen de Pedidos"
  Route="pedidos"
- Icon="paw.png">
+ Icon="mano.svg">
             <ShellContent
         Title="Lista"
-        Icon="cat.png"
+        Icon="mano.svg"
         ContentTemplate="{DataTemplate resumen:ResumenPedidoView}"
         Route="ListaResumenes" />
             <ShellContent
         Title="Detalle del Pedido"
-        Icon="dog.png"
+        Icon="mano.svg"
         ContentTemplate="{DataTemplate detalleResumen:DetallePedidoView}"
         Route="DetallePedido" />
         </Tab>
@@ -114,7 +114,7 @@
     </FlyoutItem>
     <MenuItem Text="Cerrar sesión"
       Command="{Binding LogoutCommand}"
-      IconImageSource="random.png"
+      IconImageSource="mano.svg"
          />
 
     <ShellContent

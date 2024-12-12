@@ -26,7 +26,8 @@
              ItemDisplayBinding="{Binding apellidoNombre}"
              SelectedItem="{Binding SelectedCliente}"
              BackgroundColor="#1E1E1E"
-             TextColor="White"
+             FontSize="Large"
+             TextColor="Aquamarine"
              TitleColor="Gray" />
 
             <!-- Seleccionar Modo de Pago -->
@@ -37,6 +38,7 @@
              SelectedItem="{Binding SelectedModoPago}"
              BackgroundColor="#1E1E1E"
              TextColor="White"
+             FontSize="Subtitle"
              TitleColor="Gray" />
 
             <!-- Estado del Pedido -->
@@ -46,11 +48,16 @@
              SelectedItem="{Binding NuevoPedido.estadoPedido}"
              BackgroundColor="#1E1E1E"
              TextColor="White"
+             FontSize="Subtitle"
              TitleColor="Gray" />
 
             <!-- Fue Pagado -->
-            <CheckBox IsChecked="{Binding NuevoPedido.FuePagado}" Color="White" />
-            <Label Text="¿Fue pagado?" TextColor="White" />
+           
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                <CheckBox IsChecked="{Binding NuevoPedido.FuePagado}" Color="#077ff7" />
+                <Label Text="¿Fue pagado?" TextColor="White" />
+            </HorizontalStackLayout>
+           
 
             <!-- Gestión de productos -->
             <Label Text="Productos:" FontAttributes="Bold" TextColor="White" />
@@ -76,7 +83,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Label Text="{Binding TotalProductos, StringFormat='Total productos: {0:C}'}" FontAttributes="Bold" TextColor="Green" />
+            <Label Text="{Binding TotalProductos, StringFormat='Total productos: {0:C}'}" FontAttributes="Bold" TextColor="#a8ff78" />
 
             <!-- Gestión de impresiones -->
             <Label Text="Impresiones:" FontAttributes="Bold" TextColor="White" />
@@ -102,10 +109,10 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Label Text="{Binding TotalImpresiones, StringFormat='Total impresiones: {0:C}'}" FontAttributes="Bold" TextColor="Blue" />
+            <Label Text="{Binding TotalImpresiones, StringFormat='Total impresiones: {0:C}'}" FontAttributes="Bold" TextColor="Aquamarine" />
 
             <!-- Total general -->
-            <Label Text="{Binding TotalGeneral, StringFormat='Total general: {0:C}'}" FontAttributes="Bold" TextColor="Red" HorizontalOptions="Center" />
+            <Label Text="{Binding TotalGeneral, StringFormat='Total general: {0:C}'}" FontAttributes="Bold" FontSize="Title" TextColor="Red" HorizontalOptions="Center" />
 
             <!-- Botón para crear pedido -->
             <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" Color="White" />

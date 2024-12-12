@@ -17,7 +17,7 @@
             <Frame BackgroundColor="#1E1E1E" BorderColor="#2196F3" CornerRadius="10" Padding="10">
                 <StackLayout Spacing="5">
                     <Label Text="Cliente:" FontAttributes="Bold" FontSize="18" TextColor="White" />
-                    <Label Text="{Binding Pedido.cliente.apellidoNombre}" FontSize="16" TextColor="White" />
+                    <Label Text="{Binding Pedido.cliente.apellidoNombre}" FontSize="24" TextColor="Aquamarine" />
                     <Label Text="Fecha del Pedido:" FontAttributes="Bold" FontSize="18" TextColor="White" />
                     <Label Text="{Binding Pedido.fechaPedido, StringFormat='{0:dd/MM/yyyy}'}" FontSize="16" TextColor="White" />
                     <Label Text="Estado del Pedido:" FontAttributes="Bold" FontSize="18" TextColor="White" />
@@ -42,7 +42,7 @@
                                     <Label Text=" - " FontSize="16" TextColor="White" VerticalOptions="Center" />
                                     <Label Text="{Binding cantidad}" FontSize="14" TextColor="White" />
                                 </StackLayout>
-                                <Label Text="{Binding TotalF}" FontSize="14" TextColor="Green" />
+                                <Label Text="{Binding TotalF, StringFormat='${0}'}" FontSize="18" TextColor="Green" />
                             </StackLayout>
                         </Frame>
                     </DataTemplate>
@@ -60,14 +60,14 @@
                                     <Label Text=" - " FontSize="16" TextColor="White" VerticalOptions="Center" />
                                     <Label Text="{Binding cantidad}" FontSize="14" TextColor="White" />
                                 </StackLayout>
-                                <Label Text="{Binding TotalF}" FontSize="14" TextColor="Green" />
+                                <Label Text="{Binding TotalF, StringFormat='${0}'}" FontSize="18" TextColor="Green" />
                             </StackLayout>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <Label Text="{Binding Pedido.TotalPedidoF, StringFormat='Total Pedido: {0:C}'}" FontSize="Medium" FontAttributes="Bold" TextColor="Green" HorizontalOptions="End" />
+            <Label Text="{Binding Pedido.TotalPedidoF, StringFormat='Total Pedido: ${0:C}'}" FontSize="Medium" FontAttributes="Bold" TextColor="Green" HorizontalOptions="End" />
         </StackLayout>
     </ScrollView>
 </ContentPage>
